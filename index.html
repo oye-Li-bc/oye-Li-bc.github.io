@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>李柏澄 · 机器人运动控制</title>
+
+<!--
+==================================================================
+  【怎么改这个网页 · 新手必读】(这种灰字是"注释",网页上看不到)
+==================================================================
+
+  0) 改完怎么看效果?
+     存盘(Ctrl+S)→ 双击 index.html;若浏览器已打开,按 F5 刷新。
+
+  1) 被    包起来的,都是给你自己看的提示,
+     留着不影响网页,也可以删掉。
+
+  2) 网页上显示的文字,夹在  >  和  <  之间。例如:
+            <h1>李柏澄</h1>
+     你只改中间的"李柏澄",左右的 <h1> </h1> 别动。
+
+  3) 下面 <style>...</style> 那一大段控制"长相"(颜色/字号/间距)。
+     只想改文字的话,别碰这段最安全。想换配色看下面 :root 的注释。
+
+  4) 链接怎么改?看  href="..."  引号里的网址:
+            <a href="https://github.com/...">GitHub</a>
+     引号里换成你的真实网址;引号外的"GitHub"是按钮上显示的字。
+
+  5) 怕改坏?动手前先把本文件复制一份备份(比如改名 index_备份.html)。
+==================================================================
+-->
+
+<style>
+  :root{
+    /* 【配色总开关】想换主题色,只改这几个值就行,全站自动跟着变。
+       颜色是 #RRGGBB 格式。想要别的颜色,百度"颜色选择器"取个 # 开头的码替换。
+         --bg    页面背景色(深灰黑)
+         --card  卡片背景色(比背景略亮)
+         --line  分割线/边框色
+         --text  正文文字色(接近白)
+         --muted 次要文字色(灰,用于说明性文字)
+         --accent  主强调色(蓝,链接和标题竖条)
+         --accent2 次强调色(绿,主攻技能和量化结果) */
+    --bg:#0d1117; --card:#161b22; --line:#30363d;
+    --text:#e6edf3; --muted:#8b949e; --accent:#58a6ff; --accent2:#3fb950;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.7;
+    position:relative;
+  }
+  /* 【背景水印】用 logo 平铺铺满整个页面,固定在最底层,很淡,不影响阅读。
+     - background-size 控制水印图案大小(越大越稀疏)
+     - opacity 控制深浅(越小越淡)
+     想关掉水印:把整个 body::before 这段删掉即可。 */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:-1;
+    background-image:url("logo.png");
+    background-repeat:repeat;
+    background-size:120px;
+    opacity:.04;
+    pointer-events:none;
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:860px;margin:0 auto;padding:0 24px}
+  section{padding:56px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:22px;margin-bottom:24px;display:flex;align-items:center;gap:10px}
+  h2::before{content:"";width:4px;height:22px;background:var(--accent);border-radius:2px}
+
+  /* Hero */
+  .hero{padding:80px 0 56px;border-bottom:1px solid var(--line)}
+  /* 首屏头像 logo:圆形,带细边框 */
+  .avatar{
+    width:96px;height:96px;border-radius:50%;object-fit:cover;
+    border:2px solid var(--line);margin-bottom:20px;display:block;
+  }
+  .hero h1{font-size:40px;font-weight:700;margin-bottom:8px}
+  .hero .role{font-size:20px;color:var(--accent);margin-bottom:20px}
+  .hero p{color:var(--muted);max-width:640px}
+  .links{margin-top:24px;display:flex;gap:14px;flex-wrap:wrap}
+  .links a{
+    border:1px solid var(--line);padding:8px 16px;border-radius:8px;
+    color:var(--text);font-size:14px;transition:.2s;
+    display:inline-flex;align-items:center;gap:7px;   /* 让图标和文字并排居中 */
+  }
+  .links a:hover{border-color:var(--accent);text-decoration:none;background:var(--card)}
+  /* 链接里的小图标:用 currentColor 自动跟随文字颜色 → 单色,不会彩色 */
+  .links a svg{width:16px;height:16px;flex:none}
+
+  /* Skills */
+  .skills{display:flex;flex-wrap:wrap;gap:10px}
+  .tag{
+    background:var(--card);border:1px solid var(--line);
+    padding:6px 14px;border-radius:20px;font-size:14px;color:var(--muted);
+    display:inline-flex;align-items:center;gap:6px;   /* 图标和文字并排 */
+  }
+  .tag.core{color:var(--accent2);border-color:var(--accent2)}
+  /* 标签里的小图标:跟随文字颜色 → 单色(灰色标签灰图标,绿色标签绿图标) */
+  .tag svg{width:14px;height:14px;flex:none}
+
+  /* 技术栈分类 */
+  .stack-group{margin-bottom:20px}
+  .stack-group h4{
+    font-size:15px;color:var(--muted);font-weight:600;
+    margin-bottom:10px;letter-spacing:.5px;
+  }
+
+  /* 经历条目(每段实习/经历一条) */
+  .exp{
+    border-left:2px solid var(--line);padding:2px 0 2px 20px;
+    margin-bottom:22px;position:relative;
+  }
+  .exp::before{                       /* 左侧时间线上的小圆点 */
+    content:"";position:absolute;left:-6px;top:6px;
+    width:10px;height:10px;border-radius:50%;
+    background:var(--accent);border:2px solid var(--bg);
+  }
+  .exp .when{color:var(--muted);font-size:13px;margin-bottom:4px}
+  .exp .what{font-size:17px;font-weight:600;margin-bottom:2px}
+  .exp .where{color:var(--accent);font-size:14px;margin-bottom:8px}
+  .exp .desc{color:var(--muted);font-size:15px}
+
+  /* 【中英切换】默认显示中文(.lang-zh),隐藏英文(.lang-en)。
+     点右上角按钮后,body 加上 .show-en,就反过来显示英文。
+     你只要保证每处文字都写了中、英两份即可,显示逻辑这里管好了。 */
+  .lang-en{display:none}
+  body.show-en .lang-zh{display:none}
+  body.show-en .lang-en{display:inline}
+  /* 右上角那个切换按钮的长相 */
+  .lang-toggle{
+    position:fixed;top:16px;right:16px;z-index:99;
+    background:var(--card);border:1px solid var(--line);color:var(--text);
+    padding:6px 14px;border-radius:8px;font-size:14px;cursor:pointer;
+  }
+  .lang-toggle:hover{border-color:var(--accent)}
+
+  /* ========== 交互动画 ========== */
+  /* 点页内链接(如"作品集")时平滑滚动过去,而不是瞬间跳 */
+  html{scroll-behavior:smooth}
+
+  /* 【进入动画】打开页面时,顶部标题/头衔/简介/按钮依次淡入上浮 */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  .hero h1,.hero .role,.hero p,.hero .links{opacity:0;animation:fadeUp .6s ease forwards}
+  .hero .role{animation-delay:.12s}
+  .hero p{animation-delay:.24s}
+  .hero .links{animation-delay:.36s}
+
+  /* 【滚动渐入】带 .reveal 的元素初始隐藏并下移,滚动进视野后由脚本加 .show 触发淡入 */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.show{opacity:1;transform:translateY(0)}
+
+  /* 【卡片悬停】鼠标移到项目卡上,轻轻抬起 + 蓝色边框发光 */
+  .proj{transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+  .proj:hover{
+    transform:translateY(-4px);border-color:var(--accent);
+    box-shadow:0 8px 28px rgba(88,166,255,.12);
+  }
+
+  /* 【标签悬停】技术栈标签鼠标移上去:亮起、微微放大 */
+  .tag{transition:transform .2s ease,border-color .2s ease,color .2s ease,background .2s ease}
+  .tag:hover{transform:translateY(-2px) scale(1.05);border-color:var(--accent);color:var(--text)}
+
+  /* 【链接按钮悬停】顶部按钮上移一点,更有"可点"的反馈 */
+  .links a{transition:.2s ease}
+  .links a:hover{transform:translateY(-2px)}
+
+  /* 尊重"减少动态效果"的系统设置:开了就关掉所有动画,避免晕动不适 */
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none}
+  }
+
+  /* Projects */
+  .proj{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:24px;margin-bottom:20px;
+  }
+  .proj h3{font-size:18px;margin-bottom:4px}
+  .proj .badge{
+    display:inline-block;font-size:12px;color:var(--accent2);
+    border:1px solid var(--accent2);border-radius:4px;padding:1px 8px;margin-left:8px;
+  }
+  .proj .meta{color:var(--muted);font-size:13px;margin-bottom:14px}
+  .proj dl{display:grid;grid-template-columns:84px 1fr;gap:8px 16px;font-size:15px}
+  .proj dt{color:var(--accent);font-weight:600}
+  .proj dd{color:var(--text)}
+  .proj .res{color:var(--accent2)}
+  .proj .plinks{margin-top:14px;font-size:14px;display:flex;gap:16px}
+
+  /* Contact */
+  .contact p{color:var(--muted);margin-bottom:8px}
+  footer{padding:32px 0;text-align:center;color:var(--muted);font-size:13px}
+  @media(max-width:600px){
+    .hero h1{font-size:30px}
+    .proj dl{grid-template-columns:1fr}
+    .proj dt{margin-top:6px}
+  }
+</style>
+</head>
+<body>
+
+<!-- 【中英切换按钮】固定在右上角。点一下在中文/English 之间切换。
+     按钮文字本身也会跟着变(中文界面显示 "English",英文界面显示 "中文")。
+     一般不用动这块;脚本在文件最底部 </body> 之前。 -->
+<button class="lang-toggle" onclick="toggleLang()">
+  <span class="lang-zh">English</span><span class="lang-en">中文</span>
+</button>
+
+<!-- ===== 顶部介绍 ===== -->
+<!-- 【第①块 顶部】整个网页最上面那块大标题区。
+     - <h1> 里是你的名字
+     - class="role" 那行是你的方向/头衔
+     - <p> 里是一句话自我介绍
+     - class="links" 里是几个按钮(GitHub/邮箱/作品集/简历) -->
+<header class="hero">
+  <div class="wrap">
+    <!-- 头像 logo:图片文件是同目录的 logo.png,想换头像就替换这个文件 -->
+    <img class="avatar" src="logo.png" alt="李柏澄 logo">
+    <!-- 名字:中英各一份。改时连两份一起改。 -->
+    <h1><span class="lang-zh">李柏澄</span><span class="lang-en">Li Bocheng</span></h1>
+    <div class="role">
+      <span class="lang-zh">机器人工程 · 运动控制方向</span>
+      <span class="lang-en">Robotics Engineering · Motion Control</span>
+    </div>
+    <p>
+      <span class="lang-zh">北京科技大学 · 机器人工程(科创班)大二在读,李泽湘老师体系下新工科改革试验。专注机器人运动控制(仿真 / LQR / MPC / 强化学习 / Sim2Real)。</span>
+      <span class="lang-en">Sophomore in Robotics Engineering (Innovation Class) at University of Science and Technology Beijing — part of the new-engineering reform under Prof. Zexiang Li's program. Focused on robot motion control (simulation / LQR / MPC / RL / Sim2Real).</span>
+    </p>
+    <div class="links">
+      <!-- 按钮改这里:href="网址" 引号内换成真实链接;> < 之间是按钮文字。
+           每个 <svg>...</svg> 是前面的单色小图标,跟着文字颜色走,一般不用动。
+           暂时没有的链接(如简历),可以把整行 <a ...>...</a> 删掉。 -->
+      <a href="https://github.com/oye-Li-bc" target="_blank">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a href="mailto:libocheng1632@outlook.com">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="M2 4l6 4.5L14 4"/></svg>
+        libocheng1632@outlook.com
+      </a>
+      <a href="#projects">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><path d="M1.5 6h13M5 2.5v3"/></svg>
+        <span class="lang-zh">作品集</span><span class="lang-en">Projects</span>
+      </a>
+      <a href="你的简历PDF链接" target="_blank">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M9 1.5H4a1 1 0 00-1 1v11a1 1 0 001 1h8a1 1 0 001-1V5.5L9 1.5z"/><path d="M9 1.5v4h4M5.5 8.5h5M5.5 11h5"/></svg>
+        <span class="lang-zh">简历 PDF</span><span class="lang-en">Resume PDF</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 经历 ===== -->
+<!-- 【第②块 经历】时间线式经历列表。每段经历是一个 <div class="exp">...</div>:
+     .when  时间(如 2025.07 – 2025.08)
+     .what  做了什么 / 职位
+     .where 单位 / 地点(蓝色)
+     .desc  一两句描述(灰色)
+     想加一段新经历:复制一整块 <div class="exp reveal"> ... </div> 改文字。
+     最新的放最上面。中英两份都要改。 -->
+<section id="exp" class="reveal">
+  <div class="wrap">
+    <h2><span class="lang-zh">经历</span><span class="lang-en">Experience</span></h2>
+
+    <!-- 经历1:速竞创新 结构工程师实习(早,放前面) -->
+    <div class="exp reveal">
+      <div class="when"><span class="lang-zh">2025.07 · 大一暑假 · 为期一个月</span><span class="lang-en">Jul 2025 · freshman summer · one month</span></div>
+      <div class="what"><span class="lang-zh">结构实习生</span><span class="lang-en">Structure Intern</span></div>
+      <div class="where"><span class="lang-zh">速竞创新 · 深圳科创学院入驻企业(VR 体感赛车)</span><span class="lang-en">SuJing Innovation · incubated at Shenzhen Institute (immersive racing simulator)</span></div>
+      <div class="desc">
+        <span class="lang-zh">公司产品为第一视角实时传输 + 力反馈方向盘 + 震动座椅的沉浸式体感赛车。我的工作:</span>
+        <span class="lang-en">The product is an immersive racing rig: first-person live video + force-feedback wheel + vibrating seat. My work:</span>
+        <ul style="margin:8px 0 0 18px;padding:0">
+          <li><span class="lang-zh">独立设计了一个结构连接件(固定图传与风扇),用 SolidWorks 建模 + 3D 打印,经 3 版迭代解决干涉问题后成功装车,完整走通"建模→打印→试装→改"的设计闭环,并借此掌握了 SolidWorks。</span><span class="lang-en">Independently designed a structural connector (mounting the video transmitter and fan): modeled in SolidWorks, 3D-printed, and after 3 iterations to resolve interference, successfully fitted it to the vehicle — a full model→print→test-fit→revise loop that got me hands-on with SolidWorks.</span></li>
+          <li><span class="lang-zh">试营业期间跟随 leader 参与赛车故障排查(累计约 20 车次),主要负责分析问题成因、提出思路并打下手,从中入门机械维修与调试。</span><span class="lang-en">During the trial-operation period, assisted the team lead in troubleshooting the rigs (~20 sessions), focusing on analyzing root causes and offering ideas while learning hands-on repair and debugging.</span></li>
+          <li><span class="lang-zh">实操了激光切割、喷漆等加工工艺,并参与新车型布局与结构强度优化的讨论。</span><span class="lang-en">Got hands-on with laser cutting and spray painting, and joined discussions on new-model layout and structural-strength optimization.</span></li>
+        </ul>
+        <img src="photo-sujing.jpg" alt="速竞创新实习留影" style="margin-top:12px;max-width:360px;width:100%;border-radius:8px;border:1px solid var(--line)">
+      </div>
+    </div>
+
+    <!-- 经历2:科垣创新 初创团队 -->
+    <div class="exp reveal">
+      <div class="when"><span class="lang-zh">2025.09 – 至今 · 大二</span><span class="lang-en">Sep 2025 – present · sophomore year</span></div>
+      <div class="what"><span class="lang-zh">核心成员 · 结构 / 运动控制</span><span class="lang-en">Core member · Structure / Motion Control</span></div>
+      <div class="where"><span class="lang-zh">科垣创新 · 初创团队</span><span class="lang-en">KeYuan Innovation · startup team</span></div>
+      <div class="desc">
+        <span class="lang-zh">参与组建初创团队,先后承担结构设计、运动控制与财务等工作,贯穿三代样机:</span>
+        <span class="lang-en">Co-built the startup team, taking on structural design, motion control, and finance across three prototype generations:</span>
+        <ul style="margin:8px 0 0 18px;padding:0">
+          <li><span class="lang-zh">第 1、2 代(储物领跑小车):独立完成整车结构设计(后桥两轮差速 + 前置万向轮)。</span><span class="lang-en">Gen 1 &amp; 2 (storage pacer cart): independently designed the full vehicle structure (rear two-wheel differential + front caster).</span></li>
+          <li><span class="lang-zh">第 3 代(轮圈式机器人):负责强化学习仿真训练与部署(详见作品集)。</span><span class="lang-en">Gen 3 (wheel-hub robot): owned RL training in simulation and deployment (see Projects).</span></li>
+          <li><span class="lang-zh">同时负责团队财务管理。</span><span class="lang-en">Also handled the team's finances.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 经历3:深圳科创学院冬季科创营 -->
+    <div class="exp reveal">
+      <div class="when"><span class="lang-zh">2026.01.20 – 2026.02.10 · 大二寒假</span><span class="lang-en">Jan 20 – Feb 10, 2026 · sophomore winter break</span></div>
+      <div class="what"><span class="lang-zh">高校代表 · 冬季科创营学员</span><span class="lang-en">University Representative · Winter Innovation Camp Trainee</span></div>
+      <div class="where"><span class="lang-zh">深圳科创学院 · 冬季科创营</span><span class="lang-en">Shenzhen InnoX Academy · Winter Innovation Camp</span></div>
+      <div class="desc">
+        <span class="lang-zh">作为高校代表参加深圳科创学院冬季科创营,获得"初级产品经理"结业证书。</span>
+        <span class="lang-en">Attended the Shenzhen InnoX Academy Winter Innovation Camp as a university representative; awarded the "Junior Product Manager" certificate.</span>
+        <br>
+        <img src="cert-innox-winter.jpg" alt="初级产品经理结业证书" style="margin-top:12px;max-width:360px;width:100%;border-radius:8px;border:1px solid var(--line)">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== 技能 ===== -->
+<!-- (技能栏已改为"技术栈",移动到作品集之后,见页面下方) -->
+
+<!-- ===== 作品集 ===== -->
+<!-- 【第④块 作品集 · 最重要】每个 <div class="proj">...</div> 是一张项目卡片。
+     ┌ 怎么加一个新项目?把任意一整张 <div class="proj"> ... </div> 复制一份,改里面文字。
+     ┌ 怎么删项目?把那一整张 <div class="proj"> ... </div> 删掉。
+     ┌ 卡片里的结构(照着填,这就是给 HR 看的"五段式"):
+        <h3>      项目标题      <span class="badge">状态</span> ← badge 是右边小绿框,如"进行中",不要就删掉这个 span
+        class="meta"  一行小灰字:团队/个人 · 你的角色 · 用到的工具
+        <dl> 里是五段式,每段一对:
+            <dt>小标题(蓝色)</dt>  <dd>内容</dd>
+        class="res"   绿色高亮,专门放量化结果(数字!别写"效果良好")
+        class="plinks" 底部链接:代码仓库 / 演示视频,href="#" 换成真实网址 -->
+<section id="projects">
+  <div class="wrap">
+    <h2><span class="lang-zh">作品集</span><span class="lang-en">Projects</span></h2>
+
+    <!-- 项目1:储物小车(已完成,排最前) -->
+    <div class="proj reveal">
+      <h3>
+        <span class="lang-zh">PacePal 跑步陪伴机器人 · 整体结构设计</span>
+        <span class="lang-en">PacePal Running Companion Robot · Full Structural Design</span>
+      </h3>
+      <div class="meta">
+        <span class="lang-zh">科垣创新 · 第 1、2 代样机 · 独立负责整车结构设计</span>
+        <span class="lang-en">KeYuan Innovation · Gen 1 &amp; 2 prototypes · sole owner of vehicle structural design</span>
+      </div>
+      <dl>
+        <dt><span class="lang-zh">背景</span><span class="lang-en">Context</span></dt>
+        <dd>
+          <span class="lang-zh">科垣创新推出 PacePal 户外跑步陪伴机器人,针对跑者配速不准、储物不便、夜跑安全等痛点,集智能配速领跑、随行储物、主动安全预警三大核心功能于一体,面向 25–35 岁追求科学训练的城市跑者。</span>
+          <span class="lang-en">KeYuan Innovation launched PacePal, an outdoor running companion robot addressing pacing inaccuracy, lack of storage, and night-run safety — combining intelligent pace-leading, on-the-go storage, and proactive safety alerts for urban runners aged 25–35 who pursue structured training.</span>
+        </dd>
+        <dt><span class="lang-zh">我的职责</span><span class="lang-en">My role</span></dt>
+        <dd>
+          <span class="lang-zh">负责整车结构设计:后桥两轮差速 + 前置万向轮的底盘布局、储物结构与传感器/电机安装位设计。</span>
+          <span class="lang-en">Owned the full structural design: rear two-wheel differential + front caster chassis layout, storage structure, and sensor/motor mounting.</span>
+        </dd>
+        <dt><span class="lang-zh">技术方案</span><span class="lang-en">Approach</span></dt>
+        <dd>
+          <span class="lang-zh">SolidWorks 完成 3D 建模、装配体设计与工程图输出;(填加工装配方式)</span>
+          <span class="lang-en">3D modeling, assembly design, and engineering drawings in SolidWorks; (fill in fabrication/assembly method)</span>
+        </dd>
+        <!-- <dt><span class="lang-zh">量化结果</span><span class="lang-en">Results</span></dt>
+        <dd class="res">
+          <span class="lang-zh">(载重 / 尺寸 / 实际跑通效果,填真实数据)</span>
+          <span class="lang-en">(payload / dimensions / real test outcome — fill real numbers)</span>
+        </dd> -->
+      </dl>
+      <!-- 一代 & 二代样机图片 -->
+      <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">一代 · CAD</span><span class="lang-en">Gen 1 · CAD</span></p>
+          <img src="gen1-cad.png" alt="一代 CAD" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid var(--line)">
+        </div>
+        <div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">一代 · 实物</span><span class="lang-en">Gen 1 · Real</span></p>
+          <img src="gen1-real.jpg" alt="一代实物" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid var(--line)">
+        </div>
+        <div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">二代 · CAD</span><span class="lang-en">Gen 2 · CAD</span></p>
+          <img src="gen2-cad.png" alt="二代 CAD" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid var(--line)">
+        </div>
+        <div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">二代 · 实物</span><span class="lang-en">Gen 2 · Real</span></p>
+          <img src="gen2-real.jpg" alt="二代实物" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid var(--line)">
+        </div>
+      </div>
+      <!-- <div class="plinks">
+        <a href="#" target="_blank"><span class="lang-zh">3D 模型 / 图纸</span><span class="lang-en">3D model / drawings</span></a>
+        <a href="#" target="_blank"><span class="lang-zh">实物视频</span><span class="lang-en">Hardware video</span></a>
+      </div> -->
+    </div>
+
+    <!-- 项目2:轮圈式机器人(进行中) -->
+    <div class="proj reveal">
+      <h3>
+        <span class="lang-zh">轮圈式机器人 · 强化学习运动控制</span>
+        <span class="lang-en">Wheel-Hub Robot · RL Motion Control</span>
+        <span class="badge"><span class="lang-zh">进行中</span><span class="lang-en">In progress</span></span>
+      </h3>
+      <div class="meta">
+        <span class="lang-zh">科垣创新 · 第 3 代样机 · 负责强化学习仿真训练与部署</span>
+        <span class="lang-en">KeYuan Innovation · 3rd-gen prototype · RL training in simulation &amp; deployment</span>
+      </div>
+      <dl>
+        <dt><span class="lang-zh">背景</span><span class="lang-en">Context</span></dt>
+        <dd>
+          <span class="lang-zh">团队第 3 代轮圈式机器人,需要在仿真中训练运动控制策略并部署到样机。</span>
+          <span class="lang-en">The team's 3rd-generation wheel-hub robot, needing a motion-control policy trained in simulation and deployed to the prototype.</span>
+        </dd>
+        <dt><span class="lang-zh">我的职责</span><span class="lang-en">My role</span></dt>
+        <dd>
+          <span class="lang-zh">负责强化学习全流程:模型资产化(URDF→USD、articulation 与驱动配置)、在 Isaac Lab 中搭建训练环境、设计 reward、训练运动控制策略,并部署到样机。</span>
+          <span class="lang-en">Owned the full RL pipeline: asset pipeline (URDF→USD, articulation and actuator config), training environment in Isaac Lab, reward design, policy training, and deployment to the prototype.</span>
+        </dd>
+        <dt><span class="lang-zh">技术方案</span><span class="lang-en">Approach</span></dt>
+        <dd>
+          <span class="lang-zh">Isaac Lab + PPO;通过 domain randomization 随机化质量/摩擦/惯量提升鲁棒性。</span>
+          <span class="lang-en">Isaac Lab + PPO; domain randomization over mass/friction/inertia for robustness.</span>
+        </dd>
+        <!-- <dt><span class="lang-zh">量化结果</span><span class="lang-en">Results</span></dt>
+        <dd class="res">
+          <span class="lang-zh">训练成功率 ___% · 可恢复扰动 ___</span>
+          <span class="lang-en">Success rate ___% · recoverable disturbance ___</span>
+        </dd> -->
+      </dl>
+      <!-- <div class="plinks">
+        <a href="#" target="_blank"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
+        <a href="#" target="_blank"><span class="lang-zh">演示视频</span><span class="lang-en">Demo video</span></a>
+      </div> -->
+    </div>
+
+    <!-- 项目3:倒立摆(规划中,排最后) -->
+    <div class="proj reveal">
+      <h3>
+        <span class="lang-zh">倒立摆控制:PID vs LQR 对比</span>
+        <span class="lang-en">Inverted Pendulum: PID vs LQR</span>
+        <span class="badge"><span class="lang-zh">规划中</span><span class="lang-en">Planned</span></span>
+      </h3>
+      <div class="meta">
+        <span class="lang-zh">个人项目 · MATLAB / Simulink / Simscape Multibody</span>
+        <span class="lang-en">Personal project · MATLAB / Simulink / Simscape Multibody</span>
+      </div>
+      <dl>
+        <dt><span class="lang-zh">背景</span><span class="lang-en">Context</span></dt>
+        <dd>
+          <span class="lang-zh">欠驱动系统的经典 benchmark,用于建立经典控制与最优控制的工程直觉。</span>
+          <span class="lang-en">A classic underactuated benchmark, used to build intuition for classical and optimal control.</span>
+        </dd>
+        <dt><span class="lang-zh">我的职责</span><span class="lang-en">My role</span></dt>
+        <dd>
+          <span class="lang-zh">独立完成建模、PID 与 LQR 控制器设计、参数整定与对比实验。</span>
+          <span class="lang-en">Independently handled modeling, PID and LQR controller design, tuning, and comparison experiments.</span>
+        </dd>
+        <dt><span class="lang-zh">技术方案</span><span class="lang-en">Approach</span></dt>
+        <dd>
+          <span class="lang-zh">Simscape 搭建物理模型;PID 频域整定;LQR 设计 Q/R 矩阵并对比鲁棒性。</span>
+          <span class="lang-en">Physical model in Simscape; frequency-domain PID tuning; LQR Q/R design and robustness comparison.</span>
+        </dd>
+        <!-- <dt><span class="lang-zh">量化结果</span><span class="lang-en">Results</span></dt>
+        <dd class="res">
+          <span class="lang-zh">调节时间 ___ · 超调量 ___ · 扰动恢复对比 ___</span>
+          <span class="lang-en">Settling time ___ · overshoot ___ · disturbance-recovery comparison ___</span>
+        </dd> -->
+      </dl>
+      <!-- <div class="plinks">
+        <a href="#" target="_blank"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
+        <a href="#" target="_blank"><span class="lang-zh">演示视频</span><span class="lang-en">Demo video</span></a>
+      </div> -->
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== 技术栈 ===== -->
+<!-- 【技术栈】放在作品集之后。按分类列出,每一类是一个 .stack-group。
+     - 改某类下的技能:改 .tag 里的文字。
+     - 加一个技能:复制一行 <span class="tag">XXX</span>。
+     - 让技能变绿(主攻):class="tag" → class="tag core"。
+     - 加/删一整个分类:复制或删掉一整块 <div class="stack-group">...</div>。
+     - 改分类名:改 <h4> 里的中文。 -->
+<section id="stack">
+  <div class="wrap">
+    <h2><span class="lang-zh">技术栈</span><span class="lang-en">Tech Stack</span></h2>
+
+    <div class="stack-group reveal">
+      <h4><span class="lang-zh">主攻 · 运动控制</span><span class="lang-en">Focus · Motion Control</span></h4>
+      <div class="skills">
+        <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><circle cx="8" cy="8" r="3"/><circle cx="8" cy="8" r="0.6" fill="currentColor"/></svg><span class="lang-zh">运动控制</span><span class="lang-en">Motion Control</span></span>
+        <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 11C3 11 3 5 4.8 5s1.8 6 3.4 6 1.6-6 3.3-6 1.8 3 3 3"/></svg>PID / LQR / MPC</span>
+        <span class="tag core"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5l1.8 3.9 4.2.5-3.1 2.9.9 4.2L8 10.9 4.3 13l.9-4.2L2 5.9l4.2-.5z"/></svg><span class="lang-zh">强化学习 (RL)</span><span class="lang-en">Reinforcement Learning</span></span>
+        <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h9l-2-2M14 11H5l2 2"/></svg>Sim2Real</span>
+      </div>
+    </div>
+
+    <div class="stack-group reveal">
+      <h4><span class="lang-zh">仿真与训练</span><span class="lang-en">Simulation &amp; Training</span></h4>
+      <div class="skills">
+        <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.5L14 5v6L8 14.5 2 11V5z"/><path d="M2 5l6 3.5L14 5M8 8.5v6"/></svg>Isaac Lab</span>
+        <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/><ellipse cx="8" cy="8" rx="6.5" ry="2.6"/><ellipse cx="8" cy="8" rx="6.5" ry="2.6" transform="rotate(60 8 8)"/><ellipse cx="8" cy="8" rx="6.5" ry="2.6" transform="rotate(120 8 8)"/></svg>MuJoCo</span>
+        <span class="tag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 2v12h12"/><path d="M4.5 11l2.5-3 2 1.5L13 4.5"/></svg>MATLAB / Simulink</span>
+      </div>
+    </div>
+
+    <div class="stack-group reveal">
+      <h4><span class="lang-zh">编程语言</span><span class="lang-en">Programming</span></h4>
+      <div class="skills">
+        <span class="tag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><path d="M4 6l2 2-2 2M8 10h4"/></svg>C</span>
+        <span class="tag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><path d="M11 4.5C11 2.5 9.5 2 8 2S5 2.5 5 4.5 6.5 7 8 7s3 .5 3 2.5S9.5 14 8 14s-3-.5-3-2.5"/><circle cx="6.4" cy="4.2" r="0.6" fill="currentColor" stroke="none"/><circle cx="9.6" cy="11.8" r="0.6" fill="currentColor" stroke="none"/></svg>Python</span>
+        <span class="tag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5A5 5 0 106 12.5"/><path d="M10.5 6v3.5M8.75 7.75h3.5M14 6v3.5M12.25 7.75h3.5"/></svg>C++</span>
+      </div>
+    </div>
+
+    <div class="stack-group reveal">
+      <h4><span class="lang-zh">机器人开发</span><span class="lang-en">Robotics Dev</span></h4>
+      <div class="skills">
+        <span class="tag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="3.5" cy="3.5" r="2"/><circle cx="12.5" cy="3.5" r="2"/><circle cx="8" cy="12.5" r="2"/><path d="M5 4.5l6 0M4.3 5.2l3 5.6M11.7 5.2l-3 5.6"/></svg>ROS</span>
+        <span class="tag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="7" height="7" rx="1"/><path d="M6.5 1.5v3M9.5 1.5v3M6.5 11.5v3M9.5 11.5v3M1.5 6.5h3M1.5 9.5h3M11.5 6.5h3M11.5 9.5h3"/></svg><span class="lang-zh">嵌入式 / STM32</span><span class="lang-en">Embedded / STM32</span></span>
+      </div>
+    </div>
+
+    <div class="stack-group reveal">
+      <h4><span class="lang-zh">机械设计</span><span class="lang-en">Mechanical Design</span></h4>
+      <div class="skills">
+        <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="2"/><path d="M8 1.2v2.3M8 12.5v2.3M14.8 8h-2.3M3.5 8H1.2M12.8 3.2l-1.6 1.6M4.8 11.2l-1.6 1.6M12.8 12.8l-1.6-1.6M4.8 4.8L3.2 3.2"/></svg>SolidWorks</span>
+      </div>
+    </div>
+
+    <p style="color:var(--muted);margin-top:18px;font-size:14px">
+      <span class="lang-zh">绿色为主攻方向相关 · 其余为支撑能力</span>
+      <span class="lang-en">Green = core focus · others = supporting skills</span>
+    </p>
+  </div>
+</section>
+
+<!-- 【第⑤块 页脚】最底部一行小字。改 <div> 里的文字即可。 -->
+<footer>
+  <div class="wrap">
+    <span class="lang-zh">© 2026 李柏澄 · 用 HTML 手写 · 持续更新中</span>
+    <span class="lang-en">© 2026 Li Bocheng · Hand-written in HTML · Continuously updated</span>
+  </div>
+</footer>
+
+<!-- 【中英切换脚本】点按钮时给 <body> 加/去掉 show-en 这个标记,
+     CSS 就会据此显示中文或英文。这段一般不用改。 -->
+<script>
+  function toggleLang(){
+    document.body.classList.toggle('show-en');
+  }
+
+  /* 【滚动渐入脚本】监视所有 class 带 reveal 的元素,
+     当它们滚动进入屏幕时,加上 show 让它淡入上浮。一般不用改。 */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('show');
+        io.unobserve(e.target);   // 只触发一次,出现后不再监视
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  /* 【每次打开都从顶部开始】关掉浏览器"记住滚动位置";若网址带 #projects
+     这类锚点(点过顶部按钮后会留下),清掉它并滚回最顶部的名字那一屏。
+     注意:这不影响浏览时点"作品集"按钮跳转。 */
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.addEventListener('load', function(){
+    if (location.hash) {
+      history.replaceState(null, '', location.pathname);  // 抹掉网址里的 #xxx
+    }
+    window.scrollTo(0, 0);
+  });
+</script>
+
+</body>
+</html>
