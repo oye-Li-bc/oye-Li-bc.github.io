@@ -188,6 +188,11 @@
   .proj dt{color:var(--accent);font-weight:600}
   .proj dd{color:var(--text)}
   .proj .res{color:var(--accent2)}
+  /* 正文里的代码片段(如文件名、参数名),灰底小方块 */
+  code{
+    font-family:"Consolas","SF Mono",monospace;font-size:.9em;
+    background:rgba(110,118,129,.2);padding:1px 5px;border-radius:4px;
+  }
   .proj .plinks{margin-top:14px;font-size:14px;display:flex;gap:16px}
 
   /* Contact */
@@ -222,12 +227,12 @@
     <!-- 名字:中英各一份。改时连两份一起改。 -->
     <h1><span class="lang-zh">〇也</span><span class="lang-en">LingYe</span></h1>
     <div class="role">
-      <span class="lang-zh">机器人工程 · 运动控制方向</span>
-      <span class="lang-en">Robotics Engineering · Motion Control</span>
+      <span class="lang-zh">机器人工程 · 具身智能方向</span>
+      <span class="lang-en">Robotics Engineering · Embodied AI</span>
     </div>
     <p>
-      <span class="lang-zh">北京科技大学 · 机器人工程(科创班)大二在读,李泽湘老师体系下新工科改革试验。专注机器人运动控制(仿真 / LQR / MPC / 强化学习 / Sim2Real)。</span>
-      <span class="lang-en">Sophomore in Robotics Engineering (Innovation Class) at University of Science and Technology Beijing — part of the new-engineering reform under Prof. Zexiang Li's program. Focused on robot motion control (simulation / LQR / MPC / RL / Sim2Real).</span>
+      <span class="lang-zh">北京科技大学 · 机器人工程(科创班)大二在读,李泽湘老师体系下新工科改革试验。专注机器人控制与具身智能(仿真 / 强化学习 / 模仿学习 ),在isaaclab 里曾对两款机器人进行过PPO强化学习，并成功在Mujoco中成功部署策略实现sim2sim。在lerobot框架下使用so-arm101完成了act与smolvla的采集训练部署实现物体抓取移动放置</span>
+      <span class="lang-en">Sophomore in Robotics Engineering (Innovation Class) at University of Science and Technology Beijing — part of the new-engineering reform under Prof. Zexiang Li's program. Focused on robot control and embodied AI (simulation / reinforcement learning / imitation learning). Trained PPO policies for two different robots in Isaac Lab and deployed them to MuJoCo for successful sim-to-sim transfer. On a real SO-ARM101 arm, ran the full data-collection → training → deployment loop with both ACT and SmolVLA to achieve pick-and-place.</span>
     </p>
     <div class="links">
       <!-- 按钮改这里:href="网址" 引号内换成真实链接;> < 之间是按钮文字。
@@ -253,72 +258,8 @@
   </div>
 </header>
 
-<!-- ===== 经历 ===== -->
-<!-- 【第②块 经历】时间线式经历列表。每段经历是一个 <div class="exp">...</div>:
-     .when  时间(如 2025.07 – 2025.08)
-     .what  做了什么 / 职位
-     .where 单位 / 地点(蓝色)
-     .desc  一两句描述(灰色)
-     想加一段新经历:复制一整块 <div class="exp reveal"> ... </div> 改文字。
-     最新的放最上面。中英两份都要改。 -->
-<section id="exp" class="reveal">
-  <div class="wrap">
-    <h2><span class="lang-zh">经历</span><span class="lang-en">Experience</span></h2>
-
-    <!-- 经历1:速竞创新 结构工程师实习(早,放前面) -->
-    <div class="exp reveal">
-      <div class="when"><span class="lang-zh">2025.07 · 大一暑假 · 为期一个月</span><span class="lang-en">Jul 2025 · freshman summer · one month</span></div>
-      <div class="what"><span class="lang-zh">结构实习生</span><span class="lang-en">Structure Intern</span></div>
-      <div class="where"><span class="lang-zh">速竞创新 · 深圳科创学院入驻企业(VR 体感赛车)</span><span class="lang-en">SuJing Innovation · incubated at Shenzhen Institute (immersive racing simulator)</span></div>
-      <div class="desc">
-        <span class="lang-zh">公司产品为第一视角实时传输 + 力反馈方向盘 + 震动座椅的沉浸式体感赛车。我的工作:</span>
-        <span class="lang-en">The product is an immersive racing rig: first-person live video + force-feedback wheel + vibrating seat. My work:</span>
-        <ul style="margin:8px 0 0 18px;padding:0">
-          <li><span class="lang-zh">独立设计了一个结构连接件(固定图传与风扇),用 SolidWorks 建模 + 3D 打印,经 3 版迭代解决干涉问题后成功装车,完整走通"建模→打印→试装→改"的设计闭环,并借此掌握了 SolidWorks。</span><span class="lang-en">Independently designed a structural connector (mounting the video transmitter and fan): modeled in SolidWorks, 3D-printed, and after 3 iterations to resolve interference, successfully fitted it to the vehicle — a full model→print→test-fit→revise loop that got me hands-on with SolidWorks.</span></li>
-          <li><span class="lang-zh">试营业期间跟随 leader 参与赛车故障排查(累计约 20 车次),主要负责分析问题成因、提出思路并打下手,从中入门机械维修与调试。</span><span class="lang-en">During the trial-operation period, assisted the team lead in troubleshooting the rigs (~20 sessions), focusing on analyzing root causes and offering ideas while learning hands-on repair and debugging.</span></li>
-          <li><span class="lang-zh">实操了激光切割、喷漆等加工工艺,并参与新车型布局与结构强度优化的讨论。</span><span class="lang-en">Got hands-on with laser cutting and spray painting, and joined discussions on new-model layout and structural-strength optimization.</span></li>
-        </ul>
-        <img src="photo-sujing.jpg" alt="速竞创新实习留影" style="margin-top:12px;max-width:360px;width:100%;border-radius:8px;border:1px solid var(--line)">
-      </div>
-    </div>
-
-    <!-- 经历2:科垣创新 初创团队 -->
-    <div class="exp reveal">
-      <div class="when"><span class="lang-zh">2025.09 – 至今 · 大二</span><span class="lang-en">Sep 2025 – present · sophomore year</span></div>
-      <div class="what"><span class="lang-zh">核心成员 · 结构 / 运动控制</span><span class="lang-en">Core member · Structure / Motion Control</span></div>
-      <div class="where"><span class="lang-zh">科垣创新 · 初创团队</span><span class="lang-en">KeYuan Innovation · startup team</span></div>
-      <div class="desc">
-        <span class="lang-zh">参与组建初创团队,先后承担结构设计、运动控制与财务等工作,贯穿三代样机:</span>
-        <span class="lang-en">Co-built the startup team, taking on structural design, motion control, and finance across three prototype generations:</span>
-        <ul style="margin:8px 0 0 18px;padding:0">
-          <li><span class="lang-zh">第 1、2 代(储物领跑小车):独立完成整车结构设计(后桥两轮差速 + 前置万向轮)。</span><span class="lang-en">Gen 1 &amp; 2 (storage pacer cart): independently designed the full vehicle structure (rear two-wheel differential + front caster).</span></li>
-          <li><span class="lang-zh">第 3 代(轮圈式机器人):负责强化学习仿真训练与部署(详见作品集)。</span><span class="lang-en">Gen 3 (wheel-hub robot): owned RL training in simulation and deployment (see Projects).</span></li>
-          <li><span class="lang-zh">同时负责团队财务管理。</span><span class="lang-en">Also handled the team's finances.</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 经历3:深圳科创学院冬季科创营 -->
-    <div class="exp reveal">
-      <div class="when"><span class="lang-zh">2026.01.20 – 2026.02.10 · 大二寒假</span><span class="lang-en">Jan 20 – Feb 10, 2026 · sophomore winter break</span></div>
-      <div class="what"><span class="lang-zh">高校代表 · 冬季科创营学员</span><span class="lang-en">University Representative · Winter Innovation Camp Trainee</span></div>
-      <div class="where"><span class="lang-zh">深圳科创学院 · 冬季科创营</span><span class="lang-en">Shenzhen InnoX Academy · Winter Innovation Camp</span></div>
-      <div class="desc">
-        <span class="lang-zh">作为高校代表参加深圳科创学院冬季科创营,获得"初级产品经理"结业证书。</span>
-        <span class="lang-en">Attended the Shenzhen InnoX Academy Winter Innovation Camp as a university representative; awarded the "Junior Product Manager" certificate.</span>
-        <br>
-        <img src="cert-innox-winter.jpg" alt="初级产品经理结业证书" style="margin-top:12px;max-width:360px;width:100%;border-radius:8px;border:1px solid var(--line)">
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ===== 技能 ===== -->
-<!-- (技能栏已改为"技术栈",移动到作品集之后,见页面下方) -->
-
 <!-- ===== 作品集 ===== -->
-<!-- 【第④块 作品集 · 最重要】每个 <div class="proj">...</div> 是一张项目卡片。
+<!-- 【第②块 作品集 · 最重要】每个 <div class="proj">...</div> 是一张项目卡片。
      ┌ 怎么加一个新项目?把任意一整张 <div class="proj"> ... </div> 复制一份,改里面文字。
      ┌ 怎么删项目?把那一整张 <div class="proj"> ... </div> 删掉。
      ┌ 卡片里的结构(照着填,这就是给 HR 看的"五段式"):
@@ -332,7 +273,123 @@
   <div class="wrap">
     <h2><span class="lang-zh">作品集</span><span class="lang-en">Projects</span></h2>
 
-    <!-- 项目1:储物小车(已完成,排最前) -->
+    <!-- 项目1:SO-ARM101 SmolVLA 抓取(最新,VLA 路线,排最前) -->
+    <div class="proj reveal">
+      <h3>
+        <span class="lang-zh">SO-ARM101 机械臂抓取-放置 · SmolVLA 视觉-语言-动作模型微调</span>
+        <span class="lang-en">SO-ARM101 Pick-and-Place · SmolVLA Vision-Language-Action Fine-Tuning</span>
+      </h3>
+      <div class="meta">
+        <span class="lang-zh">个人项目 · 独立完成全流程 · LeRobot / SmolVLA / PyTorch / SO-ARM101</span>
+        <span class="lang-en">Personal project · end-to-end solo · LeRobot / SmolVLA / PyTorch / SO-ARM101</span>
+      </div>
+      <dl>
+        <dt><span class="lang-zh">背景</span><span class="lang-en">Context</span></dt>
+        <dd>
+          <span class="lang-zh">在完成 ACT 模仿学习闭环之后,进一步探索视觉-语言-动作模型(VLA)路线:用大规模预训练的 VLA 权重在低成本机械臂上做小样本微调,验证"预训练先验能否带来动作质量增益",并与 ACT 基线做同任务对比。</span>
+          <span class="lang-en">After closing the ACT imitation-learning loop, I explored the vision-language-action (VLA) route: few-shot fine-tuning of large pretrained VLA weights on a low-cost arm, to test whether pretrained priors improve action quality — benchmarked against the ACT baseline on the same task.</span>
+        </dd>
+        <dt><span class="lang-zh">我的职责</span><span class="lang-en">My role</span></dt>
+        <dd>
+          <span class="lang-zh">独立负责全流程:带语言指令的示教采集(v1 40 条 + 补录 v2 15 条,合并为 v3 共 55 条 / 15,625 帧)、SmolVLA 微调、真机部署,以及一次完整的失败归因与数据驱动修复闭环。</span>
+          <span class="lang-en">Owned everything: teleop collection with language instructions (v1 40 episodes + a 15-episode v2 top-up, merged into v3 — 55 episodes / 15,625 frames), SmolVLA fine-tuning, hardware deployment, and one complete failure-diagnosis-to-data-fix loop.</span>
+        </dd>
+        <dt><span class="lang-zh">技术方案</span><span class="lang-en">Approach</span></dt>
+        <dd>
+          <span class="lang-zh">LeRobot 0.6.1 + SmolVLA(450M 参数,<b>冻结 VLM 骨干、仅训练约 100M 参数的动作专家</b>,Flow Matching 动作头),微调 20,000 步。输入为单目 RGB 1080p@25FPS + 6 维关节状态 + <b>语言指令</b>。冻结视觉编码器后 11.5GB 显存可跑 batch=8,实测约 3.8 step/s。单相机数据通过 <b>rename_map</b> 映射并补两个空相机位以对齐模型的多相机输入约定。</span>
+          <span class="lang-en">LeRobot 0.6.1 + SmolVLA (450M params — <b>VLM backbone frozen, only the ~100M-parameter action expert trained</b>, flow-matching action head), fine-tuned for 20,000 steps. Inputs: monocular RGB 1080p@25FPS, 6-D joint state, and a <b>language instruction</b>. With the vision encoder frozen, 11.5 GB VRAM fits batch=8 at ~3.8 step/s. The single-camera dataset is mapped via <b>rename_map</b> with two empty camera slots padded to satisfy the model's multi-camera input convention.</span>
+        </dd>
+        <dt><span class="lang-zh">量化结果</span><span class="lang-en">Results</span></dt>
+        <dd class="res">
+          <span class="lang-zh">真机稳定完成抓取-放置 ✅ · 55 条示教 / 15,625 帧 · <b>夹取动作质量优于 ACT 基线</b>(贴住再夹更稳定),验证了同数据量下 VLA 预训练先验的动作质量增益</span>
+          <span class="lang-en">Reliable pick-and-place on hardware ✅ · 55 demonstrations / 15,625 frames · <b>better grasp quality than the ACT baseline</b> (contacts before closing, so it holds more reliably), confirming a pretrained-prior advantage at equal data volume</span>
+        </dd>
+        <dt><span class="lang-zh">失败归因</span><span class="lang-en">Debugging</span></dt>
+        <dd>
+          <span class="lang-zh">v1 模型部署时稳定地"在纸巾卷上方约 1cm 处夹紧",夹爪闭合却够不到物体。关键一步是<b>把物体垫高 1cm 的对照实验</b> —— 行为完全不变,说明模型并没有在看物体高度、而是在照轨迹模板走,由此排除"看到了但算错高度"的假设。回看训练数据后定位根因:遥操作时夹取时机偏早,<b>演示本身就是悬空夹的</b>,而行为克隆学到的正是演示的平均行为。修复方式是数据驱动的:补录 15 条"夹爪贴住后闭合、停 1 秒再提起"的示教并增加物体位置变体,重新微调后部署成功。</span>
+          <span class="lang-en">The v1 policy consistently closed its gripper ~1 cm <em>above</em> the tissue roll — gripping air. The decisive step was a <b>controlled experiment raising the object by 1 cm</b>: behavior did not change at all, showing the policy was not reading object height but replaying a trajectory template, which ruled out "sees it but miscalculates height." Reviewing the training data found the root cause: teleop closed the gripper too early, so <b>the demonstrations themselves grasped at empty air</b> — and behavior cloning learns the average demonstrated behavior. The fix was data-driven: 15 additional episodes where the gripper contacts the roll, closes, holds one second, then lifts, plus more position variants; after re-fine-tuning, deployment succeeded.</span>
+        </dd>
+        <dt><span class="lang-zh">工程踩坑</span><span class="lang-en">Gotchas</span></dt>
+        <dd>
+          <span class="lang-zh"><b>语言指令是 VLA 的命脉</b>:LeRobot 录制默认不写 <code>tasks.parquet</code> 的任务描述,必须补齐,且训练与部署的口令要一字不差。此外部署相机分辨率须与训练一致(1920×1080),1080p 下必须指定 MJPG 编码(否则回退 YUYV 仅 5 FPS)—— 与 ACT 项目同款教训。</span>
+          <span class="lang-en"><b>The language instruction is the lifeline of a VLA</b>: LeRobot's recorder does not write the task description into <code>tasks.parquet</code> by default, so it must be backfilled — and the prompt must match verbatim between training and deployment. Deployment camera resolution must also match training (1920×1080), and at 1080p the camera must be forced to MJPG (otherwise YUYV caps it at 5 FPS) — the same lessons as the ACT project.</span>
+        </dd>
+        <dt><span class="lang-zh">局限</span><span class="lang-en">Limitations</span></dt>
+        <dd>
+          <span class="lang-zh">泛化能力受限于数据多样性与单目视角:补录的位置变体有限,对全新位置泛化一般;仅一路 front 相机使模型缺少多视角深度信息。后续改进方向为多相机采集、更多位置变体,或引入在线 RL(HIL-SERL / DAgger 路线)。</span>
+          <span class="lang-en">Generalization is bounded by data diversity and the monocular viewpoint: the added position variants are limited, so novel placements generalize only moderately, and a single front camera leaves the model without multi-view depth cues. Next steps: multi-camera collection, more position variants, or online RL (HIL-SERL / DAgger).</span>
+        </dd>
+      </dl>
+      <!-- 真机演示 GIF + 技术流程图(本地图片) -->
+      <div style="margin-top:16px">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">真机演示 · 抓取纸巾卷并放置到目标区域</span><span class="lang-en">Hardware demo · grasping the tissue roll and placing it on the target</span></p>
+        <img src="smolvla-demo.gif" alt="SmolVLA 真机抓取演示" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line)">
+      </div>
+      <div style="margin-top:10px">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">技术链路 · 采集 → 合并 → 微调 → 部署</span><span class="lang-en">Pipeline · collect → merge → fine-tune → deploy</span></p>
+        <img src="smolvla-pipeline.png" alt="SmolVLA 技术流程图" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+      </div>
+      <div class="plinks">
+        <a href="https://github.com/oye-Li-bc/so101-smolvla-grasping" target="_blank"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
+        <a href="https://github.com/oye-Li-bc/so101-smolvla-grasping/releases/tag/v1.0" target="_blank"><span class="lang-zh">完整演示视频</span><span class="lang-en">Full demo video</span></a>
+        <a href="https://huggingface.co/oye-Li-bc/oye_tissue_smolvla" target="_blank"><span class="lang-zh">模型权重</span><span class="lang-en">Model weights</span></a>
+        <a href="https://github.com/oye-Li-bc/so101-smolvla-grasping/blob/main/docs/05-%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95.md" target="_blank"><span class="lang-zh">实验记录</span><span class="lang-en">Experiment log</span></a>
+      </div>
+    </div>
+
+    <!-- 项目2:SO-ARM101 ACT 抓取(VLA 的对比基线) -->
+    <div class="proj reveal">
+      <h3>
+        <span class="lang-zh">SO-ARM101 机械臂抓取-放置 · ACT 模仿学习</span>
+        <span class="lang-en">SO-ARM101 Pick-and-Place · ACT Imitation Learning</span>
+      </h3>
+      <div class="meta">
+        <span class="lang-zh">个人项目 · 独立完成全流程 · LeRobot / ACT / PyTorch / SO-ARM101</span>
+        <span class="lang-en">Personal project · end-to-end solo · LeRobot / ACT / PyTorch / SO-ARM101</span>
+      </div>
+      <dl>
+        <dt><span class="lang-zh">背景</span><span class="lang-en">Context</span></dt>
+        <dd>
+          <span class="lang-zh">在 SO-ARM101 六自由度机械臂上,用模仿学习打通"示教采集 → 模型训练 → 真机部署 → 迭代优化"的完整闭环,任务为抓取纸巾团并放置到目标位置。</span>
+          <span class="lang-en">On a 6-DoF SO-ARM101 arm, closed the full imitation-learning loop — teleop data collection → training → real-robot deployment → iteration — for a "grasp a tissue ball and place it at a target" task.</span>
+        </dd>
+        <dt><span class="lang-zh">我的职责</span><span class="lang-en">My role</span></dt>
+        <dd>
+          <span class="lang-zh">独立负责全流程:主臂示教采集 40 条轨迹(10,000 帧)、ACT 策略训练与调参、真机部署与失败归因,并通过对照实验定位影响抓取成功率的关键因素。</span>
+          <span class="lang-en">Owned everything: recorded 40 leader-arm demonstrations (10,000 frames), trained and tuned the ACT policy, deployed to hardware and root-caused failures, and ran controlled experiments to isolate the factors driving grasp success.</span>
+        </dd>
+        <dt><span class="lang-zh">技术方案</span><span class="lang-en">Approach</span></dt>
+        <dd>
+          <span class="lang-zh">LeRobot 0.6.1 + ACT(Action Chunking Transformer,52M 参数),单目 RGB 1080p@25FPS + 6 维关节状态输入,8000 步训练(RTX 5070 Ti,11.5GB 显存下 batch_size=4)。做了两组对照实验:<b>n_action_steps 25 vs 50</b> —— 50 步(2 秒/块)胜出,说明本任务中"块间衔接平滑度"的收益大于"矫正频率";<b>数据量 14 vs 40 条</b> —— 14 条时夹爪张合幅度仅约 30° 导致夹不住,揭示了夹爪帧占比过低的数据不平衡陷阱。</span>
+          <span class="lang-en">LeRobot 0.6.1 + ACT (Action Chunking Transformer, 52M params); monocular RGB 1080p@25FPS plus 6-D joint state; 8000 training steps (RTX 5070 Ti, batch_size=4 under 11.5 GB VRAM). Two controlled experiments: <b>n_action_steps 25 vs 50</b> — 50 (2 s per chunk) won, showing smoother chunk transitions outweigh higher correction frequency here; <b>14 vs 40 demonstrations</b> — with 14, gripper travel was only ~30° and grasps failed, exposing a data-imbalance trap when gripper-motion frames are underrepresented.</span>
+        </dd>
+        <dt><span class="lang-zh">量化结果</span><span class="lang-en">Results</span></dt>
+        <dd class="res">
+          <span class="lang-zh">L1 Loss 0.324 → <b>0.257</b> · KL Loss 0.07 → <b>0.015</b> · 夹爪张合 30° → <b>62.3°</b> · 真机稳定完成抓取-放置</span>
+          <span class="lang-en">L1 loss 0.324 → <b>0.257</b> · KL loss 0.07 → <b>0.015</b> · gripper travel 30° → <b>62.3°</b> · reliable pick-and-place on hardware</span>
+        </dd>
+        <dt><span class="lang-zh">工程踩坑</span><span class="lang-en">Gotchas</span></dt>
+        <dd>
+          <span class="lang-zh">部署相机分辨率必须与训练数据一致(1920×1080),否则模型误判距离、机械臂停在目标上方约 5cm;1080p 下相机必须指定 MJPG 编码,否则回退 YUYV 只有 5 FPS。</span>
+          <span class="lang-en">Deployment camera resolution must match the training data (1920×1080), or the policy misjudges depth and the arm stalls ~5 cm above the target; at 1080p the camera must be forced to MJPG, otherwise it falls back to YUYV at just 5 FPS.</span>
+        </dd>
+      </dl>
+      <!-- 真机演示 GIF + 训练曲线图(本地图片) -->
+      <div style="margin-top:16px">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">真机演示 · 抓取纸巾团并放置到目标位置</span><span class="lang-en">Hardware demo · grasping the tissue ball and placing it at the target</span></p>
+        <img src="so101-demo.gif" alt="ACT 真机抓取演示" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line)">
+      </div>
+      <div style="margin-top:10px">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">训练曲线 · L1 / KL Loss</span><span class="lang-en">Training curves · L1 / KL loss</span></p>
+        <img src="so101-loss.png" alt="ACT 训练损失曲线" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+      </div>
+      <div class="plinks">
+        <a href="https://github.com/oye-Li-bc/so101-act-grasping" target="_blank"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
+        <a href="https://github.com/oye-Li-bc/so101-act-grasping/blob/main/docs/05-%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95.md" target="_blank"><span class="lang-zh">实验记录</span><span class="lang-en">Experiment log</span></a>
+      </div>
+    </div>
+
+    <!-- 项目3:储物小车(已完成) -->
     <div class="proj reveal">
       <h3>
         <span class="lang-zh">PacePal 跑步陪伴机器人 · 整体结构设计</span>
@@ -389,82 +446,124 @@
       </div> -->
     </div>
 
-    <!-- 项目2:轮圈式机器人(进行中) -->
+    <!-- 项目4:两轮自平衡机器人(进行中) -->
     <div class="proj reveal">
       <h3>
-        <span class="lang-zh">轮圈式机器人 · 强化学习运动控制</span>
-        <span class="lang-en">Wheel-Hub Robot · RL Motion Control</span>
+        <span class="lang-zh">两轮自平衡机器人 · PPO 强化学习与 sim2sim 部署</span>
+        <span class="lang-en">Two-Wheeled Self-Balancing Robot · PPO RL &amp; Sim-to-Sim Deployment</span>
         <span class="badge"><span class="lang-zh">进行中</span><span class="lang-en">In progress</span></span>
       </h3>
       <div class="meta">
-        <span class="lang-zh">科垣创新 · 第 3 代样机 · 负责强化学习仿真训练与部署</span>
-        <span class="lang-en">KeYuan Innovation · 3rd-gen prototype · RL training in simulation &amp; deployment</span>
+        <span class="lang-zh">科垣创新 · 第 3 代样机 · 负责强化学习全流程 · Isaac Lab / PPO / MuJoCo</span>
+        <span class="lang-en">KeYuan Innovation · 3rd-gen prototype · owned the full RL pipeline · Isaac Lab / PPO / MuJoCo</span>
       </div>
       <dl>
         <dt><span class="lang-zh">背景</span><span class="lang-en">Context</span></dt>
         <dd>
-          <span class="lang-zh">团队第 3 代轮圈式机器人,需要在仿真中训练运动控制策略并部署到样机。</span>
-          <span class="lang-en">The team's 3rd-generation wheel-hub robot, needing a motion-control policy trained in simulation and deployed to the prototype.</span>
+          <span class="lang-zh">团队第 3 代轮圈式机器人为两轮自平衡构型。相比对精确解析动力学建模的依赖,选择用深度强化学习端到端学习"仅靠两轮力矩保持车身直立"的控制策略,并跨仿真器验证其可迁移性。</span>
+          <span class="lang-en">The team's 3rd-generation wheel-hub robot is a two-wheeled self-balancing platform. Rather than depending on precise analytical dynamics modeling, I used deep RL to learn end-to-end a policy that keeps the body upright using only wheel torques, then validated transferability across simulators.</span>
         </dd>
         <dt><span class="lang-zh">我的职责</span><span class="lang-en">My role</span></dt>
         <dd>
-          <span class="lang-zh">负责强化学习全流程:模型资产化(URDF→USD、articulation 与驱动配置)、在 Isaac Lab 中搭建训练环境、设计 reward、训练运动控制策略,并部署到样机。</span>
-          <span class="lang-en">Owned the full RL pipeline: asset pipeline (URDF→USD, articulation and actuator config), training environment in Isaac Lab, reward design, policy training, and deployment to the prototype.</span>
+          <span class="lang-zh">负责强化学习全流程:模型资产化(URDF→USD、articulation 与驱动配置)、在 Isaac Lab 中搭建训练环境与奖励函数、PPO 训练与调参、策略导出,以及迁移到 MuJoCo 的 sim2sim 部署与量化验证。</span>
+          <span class="lang-en">Owned the full RL pipeline: asset preparation (URDF→USD, articulation and actuator config), training environment and reward design in Isaac Lab, PPO training and tuning, policy export, and sim-to-sim deployment plus quantitative validation in MuJoCo.</span>
         </dd>
         <dt><span class="lang-zh">技术方案</span><span class="lang-en">Approach</span></dt>
         <dd>
-          <span class="lang-zh">Isaac Lab + PPO;通过 domain randomization 随机化质量/摩擦/惯量提升鲁棒性。</span>
-          <span class="lang-en">Isaac Lab + PPO; domain randomization over mass/friction/inertia for robustness.</span>
+          <span class="lang-zh">Isaac Lab 2.1.0(PhysX)+ RSL-RL 的 PPO,4096 个并行环境在线自采集数据,无需外部数据集。观测 13 维 → 动作 2 维(左右轮力矩),策略网络仅 <b>13-64-64-2</b>,具备嵌入式实时部署潜力。域随机化摩擦、连杆质量与关节参数,并施加周期性外力扰动。导出时把观测归一化<b>解析折叠进网络首层</b>(误差 &lt;1e-7),使部署端只需纯 numpy 前向、不依赖 torch。</span>
+          <span class="lang-en">Isaac Lab 2.1.0 (PhysX) with PPO from RSL-RL; data self-collected online across 4096 parallel environments, no external dataset. 13-D observation → 2-D action (left/right wheel torque) through a network of just <b>13-64-64-2</b>, small enough for real-time embedded deployment. Domain randomization over friction, link mass, and joint parameters, plus periodic external pushes. On export, observation normalization is <b>analytically folded into the first layer</b> (error &lt;1e-7), so deployment runs a pure-numpy forward pass with no torch dependency.</span>
         </dd>
-        <!-- <dt><span class="lang-zh">量化结果</span><span class="lang-en">Results</span></dt>
+        <dt><span class="lang-zh">量化结果</span><span class="lang-en">Results</span></dt>
         <dd class="res">
-          <span class="lang-zh">训练成功率 ___% · 可恢复扰动 ___</span>
-          <span class="lang-en">Success rate ___% · recoverable disturbance ___</span>
-        </dd> -->
+          <span class="lang-zh">MuJoCo sim2sim 平均维持时间 4.8s → <b>10.3s</b>(近乎翻倍) · 车身平均倾角 7.4° → <b>约 4°</b> · Isaac 中可无限期保持平衡并从随机推力中恢复</span>
+          <span class="lang-en">MuJoCo sim-to-sim mean survival time 4.8 s → <b>10.3 s</b> (nearly doubled) · mean body tilt 7.4° → <b>~4°</b> · in Isaac the policy balances indefinitely and recovers from random pushes</span>
+        </dd>
+        <dt><span class="lang-zh">工程踩坑</span><span class="lang-en">Gotchas</span></dt>
+        <dd>
+          <span class="lang-zh">初版策略学出了"直立前溜"的退化解 —— 车身站直了却一直向前滑,靠增设水平速度惩罚项修正为真正原地驻停;浮动基座任务训练中反复出现 NaN 崩溃,用对数参数化标准差 + 在线经验归一化根治;此外定位到部署模型基座惯量设置有误,修正后才拿到上面的迁移数据。</span>
+          <span class="lang-en">The first policy found a degenerate solution — upright but continuously drifting forward — fixed by adding a horizontal-velocity penalty so it truly holds position. Training on a floating-base task kept collapsing to NaN, resolved with log-parameterized standard deviation plus online observation normalization. I also traced a wrong base inertia in the deployment model; the transfer numbers above are from after that fix.</span>
+        </dd>
       </dl>
-      <!-- <div class="plinks">
-        <a href="#" target="_blank"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
-        <a href="#" target="_blank"><span class="lang-zh">演示视频</span><span class="lang-en">Demo video</span></a>
-      </div> -->
+      <!-- 训练曲线 / 稳定性 / sim2sim 对比图(本地图片) -->
+      <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">PPO 训练曲线</span><span class="lang-en">PPO training curve</span></p>
+          <img src="twowheel-fig1_train_curve.png" alt="PPO 训练曲线" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+        </div>
+        <div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">姿态稳定性</span><span class="lang-en">Attitude stability</span></p>
+          <img src="twowheel-fig2_stability.png" alt="姿态稳定性" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+        </div>
+      </div>
+      <div style="margin-top:10px">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">sim2sim 迁移对比(维持时间 / 倾角)</span><span class="lang-en">Sim-to-sim comparison (survival time / tilt)</span></p>
+        <img src="twowheel-fig3_sim2sim.png" alt="sim2sim 迁移对比" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+      </div>
+      <div class="plinks">
+        <a href="https://github.com/oye-Li-bc/two-wheel-balance-rl" target="_blank"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
+        <a href="https://github.com/oye-Li-bc/two-wheel-balance-rl/blob/main/docs/report.pdf" target="_blank"><span class="lang-zh">技术报告 PDF</span><span class="lang-en">Technical report PDF</span></a>
+      </div>
     </div>
 
-    <!-- 项目3:倒立摆(规划中,排最后) -->
-    <div class="proj reveal">
-      <h3>
-        <span class="lang-zh">倒立摆控制:PID vs LQR 对比</span>
-        <span class="lang-en">Inverted Pendulum: PID vs LQR</span>
-        <span class="badge"><span class="lang-zh">规划中</span><span class="lang-en">Planned</span></span>
-      </h3>
-      <div class="meta">
-        <span class="lang-zh">个人项目 · MATLAB / Simulink / Simscape Multibody</span>
-        <span class="lang-en">Personal project · MATLAB / Simulink / Simscape Multibody</span>
+  </div>
+</section>
+
+<!-- ===== 经历 ===== -->
+<!-- 【第③块 经历】时间线式经历列表。每段经历是一个 <div class="exp">...</div>:
+     .when  时间(如 2025.07 – 2025.08)
+     .what  做了什么 / 职位
+     .where 单位 / 地点(蓝色)
+     .desc  一两句描述(灰色)
+     想加一段新经历:复制一整块 <div class="exp reveal"> ... </div> 改文字。
+     最新的放最上面。中英两份都要改。 -->
+<section id="exp" class="reveal">
+  <div class="wrap">
+    <h2><span class="lang-zh">经历</span><span class="lang-en">Experience</span></h2>
+
+    <!-- 经历1:深圳科创学院冬季科创营 -->
+    <div class="exp reveal">
+      <div class="when"><span class="lang-zh">2026.01.20 – 2026.02.10 · 大二寒假</span><span class="lang-en">Jan 20 – Feb 10, 2026 · sophomore winter break</span></div>
+      <div class="what"><span class="lang-zh">高校代表 · 冬季科创营学员</span><span class="lang-en">University Representative · Winter Innovation Camp Trainee</span></div>
+      <div class="where"><span class="lang-zh">深圳科创学院 · 冬季科创营</span><span class="lang-en">Shenzhen InnoX Academy · Winter Innovation Camp</span></div>
+      <div class="desc">
+        <span class="lang-zh">作为高校代表参加深圳科创学院冬季科创营,获得"初级产品经理"结业证书。</span>
+        <span class="lang-en">Attended the Shenzhen InnoX Academy Winter Innovation Camp as a university representative; awarded the "Junior Product Manager" certificate.</span>
+        <br>
+        <img src="cert-innox-winter.jpg" alt="初级产品经理结业证书" style="margin-top:12px;max-width:360px;width:100%;border-radius:8px;border:1px solid var(--line)">
       </div>
-      <dl>
-        <dt><span class="lang-zh">背景</span><span class="lang-en">Context</span></dt>
-        <dd>
-          <span class="lang-zh">欠驱动系统的经典 benchmark,用于建立经典控制与最优控制的工程直觉。</span>
-          <span class="lang-en">A classic underactuated benchmark, used to build intuition for classical and optimal control.</span>
-        </dd>
-        <dt><span class="lang-zh">我的职责</span><span class="lang-en">My role</span></dt>
-        <dd>
-          <span class="lang-zh">独立完成建模、PID 与 LQR 控制器设计、参数整定与对比实验。</span>
-          <span class="lang-en">Independently handled modeling, PID and LQR controller design, tuning, and comparison experiments.</span>
-        </dd>
-        <dt><span class="lang-zh">技术方案</span><span class="lang-en">Approach</span></dt>
-        <dd>
-          <span class="lang-zh">Simscape 搭建物理模型;PID 频域整定;LQR 设计 Q/R 矩阵并对比鲁棒性。</span>
-          <span class="lang-en">Physical model in Simscape; frequency-domain PID tuning; LQR Q/R design and robustness comparison.</span>
-        </dd>
-        <!-- <dt><span class="lang-zh">量化结果</span><span class="lang-en">Results</span></dt>
-        <dd class="res">
-          <span class="lang-zh">调节时间 ___ · 超调量 ___ · 扰动恢复对比 ___</span>
-          <span class="lang-en">Settling time ___ · overshoot ___ · disturbance-recovery comparison ___</span>
-        </dd> -->
-      </dl>
-      <!-- <div class="plinks">
-        <a href="#" target="_blank"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
-        <a href="#" target="_blank"><span class="lang-zh">演示视频</span><span class="lang-en">Demo video</span></a>
-      </div> -->
+    </div>
+
+    <!-- 经历2:科垣创新 初创团队 -->
+    <div class="exp reveal">
+      <div class="when"><span class="lang-zh">2025.09 – 至今 · 大二</span><span class="lang-en">Sep 2025 – present · sophomore year</span></div>
+      <div class="what"><span class="lang-zh">核心成员 · 结构 / 运动控制</span><span class="lang-en">Core member · Structure / Motion Control</span></div>
+      <div class="where"><span class="lang-zh">科垣创新 · 初创团队</span><span class="lang-en">KeYuan Innovation · startup team</span></div>
+      <div class="desc">
+        <span class="lang-zh">参与组建初创团队,先后承担结构设计、运动控制与财务等工作,贯穿三代样机:</span>
+        <span class="lang-en">Co-built the startup team, taking on structural design, motion control, and finance across three prototype generations:</span>
+        <ul style="margin:8px 0 0 18px;padding:0">
+          <li><span class="lang-zh">第 1、2 代(储物领跑小车):独立完成整车结构设计(后桥两轮差速 + 前置万向轮)。</span><span class="lang-en">Gen 1 &amp; 2 (storage pacer cart): independently designed the full vehicle structure (rear two-wheel differential + front caster).</span></li>
+          <li><span class="lang-zh">第 3 代(轮圈式机器人):负责强化学习仿真训练与部署(详见作品集)。</span><span class="lang-en">Gen 3 (wheel-hub robot): owned RL training in simulation and deployment (see Projects).</span></li>
+          <li><span class="lang-zh">同时负责团队财务管理。</span><span class="lang-en">Also handled the team's finances.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 经历3:速竞创新 结构工程师实习 -->
+    <div class="exp reveal">
+      <div class="when"><span class="lang-zh">2025.07 · 大一暑假 · 为期一个月</span><span class="lang-en">Jul 2025 · freshman summer · one month</span></div>
+      <div class="what"><span class="lang-zh">结构实习生</span><span class="lang-en">Structure Intern</span></div>
+      <div class="where"><span class="lang-zh">速竞创新 · 深圳科创学院入驻企业(VR 体感赛车)</span><span class="lang-en">SuJing Innovation · incubated at Shenzhen Institute (immersive racing simulator)</span></div>
+      <div class="desc">
+        <span class="lang-zh">公司产品为第一视角实时传输 + 力反馈方向盘 + 震动座椅的沉浸式体感赛车。我的工作:</span>
+        <span class="lang-en">The product is an immersive racing rig: first-person live video + force-feedback wheel + vibrating seat. My work:</span>
+        <ul style="margin:8px 0 0 18px;padding:0">
+          <li><span class="lang-zh">独立设计了一个结构连接件(固定图传与风扇),用 SolidWorks 建模 + 3D 打印,经 3 版迭代解决干涉问题后成功装车,完整走通"建模→打印→试装→改"的设计闭环,并借此掌握了 SolidWorks。</span><span class="lang-en">Independently designed a structural connector (mounting the video transmitter and fan): modeled in SolidWorks, 3D-printed, and after 3 iterations to resolve interference, successfully fitted it to the vehicle — a full model→print→test-fit→revise loop that got me hands-on with SolidWorks.</span></li>
+          <li><span class="lang-zh">试营业期间跟随 leader 参与赛车故障排查(累计约 20 车次),主要负责分析问题成因、提出思路并打下手,从中入门机械维修与调试。</span><span class="lang-en">During the trial-operation period, assisted the team lead in troubleshooting the rigs (~20 sessions), focusing on analyzing root causes and offering ideas while learning hands-on repair and debugging.</span></li>
+          <li><span class="lang-zh">实操了激光切割、喷漆等加工工艺,并参与新车型布局与结构强度优化的讨论。</span><span class="lang-en">Got hands-on with laser cutting and spray painting, and joined discussions on new-model layout and structural-strength optimization.</span></li>
+        </ul>
+        <img src="photo-sujing.jpg" alt="速竞创新实习留影" style="margin-top:12px;max-width:360px;width:100%;border-radius:8px;border:1px solid var(--line)">
+      </div>
     </div>
 
   </div>
@@ -482,11 +581,11 @@
     <h2><span class="lang-zh">技术栈</span><span class="lang-en">Tech Stack</span></h2>
 
     <div class="stack-group reveal">
-      <h4><span class="lang-zh">主攻 · 运动控制</span><span class="lang-en">Focus · Motion Control</span></h4>
+      <h4><span class="lang-zh">主攻 · 具身智能</span><span class="lang-en">Focus · Embodied AI</span></h4>
       <div class="skills">
-        <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><circle cx="8" cy="8" r="3"/><circle cx="8" cy="8" r="0.6" fill="currentColor"/></svg><span class="lang-zh">运动控制</span><span class="lang-en">Motion Control</span></span>
-        <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 11C3 11 3 5 4.8 5s1.8 6 3.4 6 1.6-6 3.3-6 1.8 3 3 3"/></svg>PID / LQR / MPC</span>
         <span class="tag core"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5l1.8 3.9 4.2.5-3.1 2.9.9 4.2L8 10.9 4.3 13l.9-4.2L2 5.9l4.2-.5z"/></svg><span class="lang-zh">强化学习 (RL)</span><span class="lang-en">Reinforcement Learning</span></span>
+        <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12.5V9m3 3.5V6m3 6.5V3.5m3 9V7.5"/><path d="M1.5 14.5h13"/></svg><span class="lang-zh">模仿学习 (ACT)</span><span class="lang-en">Imitation Learning (ACT)</span></span>
+        <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 8s2.2-3.8 6.5-3.8S14.5 8 14.5 8s-2.2 3.8-6.5 3.8S1.5 8 1.5 8z"/><circle cx="8" cy="8" r="1.6"/></svg><span class="lang-zh">视觉-语言-动作模型 (VLA / SmolVLA)</span><span class="lang-en">Vision-Language-Action (VLA / SmolVLA)</span></span>
         <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h9l-2-2M14 11H5l2 2"/></svg>Sim2Real</span>
       </div>
     </div>
@@ -496,7 +595,8 @@
       <div class="skills">
         <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.5L14 5v6L8 14.5 2 11V5z"/><path d="M2 5l6 3.5L14 5M8 8.5v6"/></svg>Isaac Lab</span>
         <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/><ellipse cx="8" cy="8" rx="6.5" ry="2.6"/><ellipse cx="8" cy="8" rx="6.5" ry="2.6" transform="rotate(60 8 8)"/><ellipse cx="8" cy="8" rx="6.5" ry="2.6" transform="rotate(120 8 8)"/></svg>MuJoCo</span>
-        <span class="tag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 2v12h12"/><path d="M4.5 11l2.5-3 2 1.5L13 4.5"/></svg>MATLAB / Simulink</span>
+        <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.8l5.5 3v4.4L8 12.2 2.5 9.2V4.8z"/><circle cx="8" cy="7" r="1.4"/><path d="M8 12.2v2.3"/></svg>LeRobot</span>
+        <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><path d="M8 2.2c-2.2 0-4 1.8-4 4v3.2a4 4 0 008 0V6.2c0-2.2-1.8-4-4-4z"/><path d="M8 2.2V.8M5.6 13.6L4 15.2M10.4 13.6L12 15.2"/></svg>PyTorch</span>
       </div>
     </div>
 
