@@ -273,7 +273,71 @@
   <div class="wrap">
     <h2><span class="lang-zh">作品集</span><span class="lang-en">Projects</span></h2>
 
-    <!-- 项目1:SO-ARM101 SmolVLA 抓取(最新,VLA 路线,排最前) -->
+    <!-- 项目1:SO-ARM101 HIL-SERL 真机在线强化学习(最新,成果最硬,排最前) -->
+    <div class="proj reveal">
+      <h3>
+        <span class="lang-zh">SO-ARM101 推物体 · HIL-SERL 真机在线强化学习</span>
+        <span class="lang-en">SO-ARM101 Object Pushing · HIL-SERL Real-Robot Online RL</span>
+      </h3>
+      <div class="meta">
+        <span class="lang-zh">个人项目 · 独立完成全流程 · LeRobot / HIL-SERL / SAC / SO-ARM101</span>
+        <span class="lang-en">Personal project · end-to-end solo · LeRobot / HIL-SERL / SAC / SO-ARM101</span>
+      </div>
+      <dl>
+        <dt><span class="lang-zh">背景</span><span class="lang-en">Context</span></dt>
+        <dd>
+          <span class="lang-zh">模仿学习(ACT / SmolVLA)的瓶颈很明确:示教要几十条,而策略上限就是示教水平、做错了不会自己纠。HIL-SERL 换了思路 —— 只用约 10 条示教起手,之后让机械臂自己跑,推歪了人接管一下,接管数据再喂回强化学习,策略越跑越不需要人管。这个项目正是我在 SmolVLA 卡片里写的"引入在线 RL"改进方向的落地。</span>
+          <span class="lang-en">Imitation learning (ACT / SmolVLA) has a clear ceiling: it needs dozens of demonstrations, the policy can only match demonstration quality, and it cannot correct its own mistakes. HIL-SERL inverts this — start from roughly 10 demonstrations, then let the arm run itself, with a human taking over when it goes wrong; those takeover samples feed back into RL until intervention is barely needed. This project realizes the "online RL" direction I listed as future work on the SmolVLA card.</span>
+        </dd>
+        <dt><span class="lang-zh">我的职责</span><span class="lang-en">My role</span></dt>
+        <dd>
+          <span class="lang-zh">独立负责全流程:把 HIL-SERL 移植适配到本机 LeRobot 0.6.1(含 10 处本地补丁)、实测标定本机参数三件套(起始姿势 / EE 围栏 / 图像裁剪框)、录制 12 条示教、跑 learner–actor 双进程在线训练、真机部署与 20 次换位测试,并完整归档踩坑档案。</span>
+          <span class="lang-en">Owned everything: ported and adapted HIL-SERL to my local LeRobot 0.6.1 (10 local patches), measured the three machine-specific calibrations (home pose / end-effector bounds / image crop box), recorded 12 demonstrations, ran the two-process learner–actor online training, deployed to hardware, ran 20 repositioned trials, and documented the full troubleshooting archive.</span>
+        </dd>
+        <dt><span class="lang-zh">技术方案</span><span class="lang-en">Approach</span></dt>
+        <dd>
+          <span class="lang-zh">在线 SAC,<b>learner(策略服务器 + 训练)与 actor(真机执行 + 采集)双进程经 gRPC 通信</b>:learner 持续把最新参数推给 actor,actor 把 transition 回传入池。人在环干预的数据同样进池,每集比上一集少干预。任务设计上刻意选"推物体进胶带区"而非抓取-放置 —— 时程短(1~2 秒一回合,适合回合制在线采样)、奖励明确(进没进,人按一下键即为 1)、探索空间小,这三条直接决定了能否在几十分钟内出效果。又因为推物体全程不用夹爪,把<b>动作空间从 4 维裁到 3 维</b>,少学一个自由度换取更快收敛。</span>
+          <span class="lang-en">Online SAC with a <b>two-process learner (policy server + training) and actor (hardware rollout + collection) talking over gRPC</b>: the learner streams fresh parameters to the actor, the actor returns transitions to the buffer. Human-takeover samples enter the same buffer, and intervention drops episode over episode. I deliberately chose "push the object into a taped zone" over pick-and-place — short horizon (1–2 s per episode, well suited to episodic online sampling), unambiguous reward (a single keypress marks success), and a small exploration space; those three choices are what make results reachable in tens of minutes. Since pushing never uses the gripper, I <b>cut the action space from 4-D to 3-D</b>, trading one degree of freedom for faster convergence.</span>
+        </dd>
+        <dt><span class="lang-zh">量化结果</span><span class="lang-en">Results</span></dt>
+        <dd class="res">
+          <span class="lang-zh">仅 <b>12 条示教</b>(2,087 帧)+ 在线自采 · <b>21,000 步约 45 分钟</b>真机训练即达到较好效果(参考教程同路线首次约 2 小时)· 真机 <b>20 次测试、每次更换起始位置,20/20 全部成功</b> ✅</span>
+          <span class="lang-en">Just <b>12 demonstrations</b> (2,087 frames) plus online self-collection · <b>21,000 optimization steps in ~45 min</b> of real-robot training to reach solid performance (the reference tutorial's first run on the same route took ~2 h) · <b>20 hardware trials, each from a different start position — 20/20 succeeded</b> ✅</span>
+        </dd>
+        <dt><span class="lang-zh">工程踩坑</span><span class="lang-en">Gotchas</span></dt>
+        <dd>
+          <span class="lang-zh">12 集里有 8 集奖励全程为 0 —— 原因是那些集跑满了 20 秒时限自动结束,<b>时限到了不算成功、不会有任何标注</b>,推到位必须马上按键;<b>actor 崩了 learner 不会知道</b>,learner 往队列推参数不检查有没有人收,会继续"对着空气"训练、步数照涨,所以停的时候要先停 actor 再停 learner;某次 actor 直接退出,线索是<b>只有夹爪(id=6)串口写失败、前 5 个舵机都正常</b> —— 定位到那颗舵机接触不良,重插线即可。</span>
+          <span class="lang-en">8 of the 12 episodes had all-zero reward — they had run out the 20 s time limit, and <b>hitting the limit is not success and produces no label at all</b>, so the success key must be pressed the moment the object lands. <b>The learner never notices when the actor dies</b>: it pushes parameters to a queue without checking for a consumer, so it keeps "training against thin air" while the step count climbs — stop the actor first, then the learner. One actor crash was traced by noticing <b>only the gripper (id=6) failed its serial write while the other five servos were fine</b>, pointing at a loose connector on that one servo.</span>
+        </dd>
+        <dt><span class="lang-zh">局限</span><span class="lang-en">Limitations</span></dt>
+        <dd>
+          <span class="lang-zh">奖励判定用的是人工按键而非奖励分类器 —— 试过分类器但分类不稳定,最终关闭改回人工,这也与参考路线的结论一致。另外训练指标只往 wandb 送,配置里没开 wandb 时终端和日志里一个字都看不到,漏开就补不上。</span>
+          <span class="lang-en">Success is judged by a human keypress rather than a learned reward classifier — I tried the classifier but its predictions were unstable, so I disabled it and reverted to manual keying, matching the reference route's own conclusion. Also, training metrics are sent only to wandb: with wandb disabled in the config, nothing appears in the terminal or logs, and a missed run cannot be recovered after the fact.</span>
+        </dd>
+      </dl>
+      <!-- 真机演示动图 + Actor / Critic 训练曲线(本地图片) -->
+      <div style="margin-top:16px">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">真机演示 · 21,000 步策略自主把物体推进目标区(原速)</span><span class="lang-en">Hardware demo · the 21,000-step policy pushing the object into the target zone (real time)</span></p>
+        <img src="hilserl-demo.webp" alt="HIL-SERL 真机推物体演示" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line)">
+      </div>
+      <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">Actor loss</span><span class="lang-en">Actor loss</span></p>
+          <img src="hilserl-loss-actor.png" alt="Actor loss 曲线" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+        </div>
+        <div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">Critic loss</span><span class="lang-en">Critic loss</span></p>
+          <img src="hilserl-loss-critic.png" alt="Critic loss 曲线" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+        </div>
+      </div>
+      <div class="plinks">
+        <a href="https://github.com/oye-Li-bc/so101-hilserl-pushing" target="_blank"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
+        <a href="https://github.com/oye-Li-bc/so101-hilserl-pushing/blob/main/results/demo_video/policy_21000_full.mp4" target="_blank"><span class="lang-zh">完整测试视频</span><span class="lang-en">Full test video</span></a>
+        <a href="https://github.com/oye-Li-bc/so101-hilserl-pushing/blob/main/docs/05-%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95.md" target="_blank"><span class="lang-zh">实验记录</span><span class="lang-en">Experiment log</span></a>
+      </div>
+    </div>
+
+    <!-- 项目2:SO-ARM101 SmolVLA 抓取(VLA 路线) -->
     <div class="proj reveal">
       <h3>
         <span class="lang-zh">SO-ARM101 机械臂抓取-放置 · SmolVLA 视觉-语言-动作模型微调</span>
@@ -316,8 +380,8 @@
         </dd>
         <dt><span class="lang-zh">局限</span><span class="lang-en">Limitations</span></dt>
         <dd>
-          <span class="lang-zh">泛化能力受限于数据多样性与单目视角:补录的位置变体有限,对全新位置泛化一般;仅一路 front 相机使模型缺少多视角深度信息。后续改进方向为多相机采集、更多位置变体,或引入在线 RL(HIL-SERL / DAgger 路线)。</span>
-          <span class="lang-en">Generalization is bounded by data diversity and the monocular viewpoint: the added position variants are limited, so novel placements generalize only moderately, and a single front camera leaves the model without multi-view depth cues. Next steps: multi-camera collection, more position variants, or online RL (HIL-SERL / DAgger).</span>
+          <span class="lang-zh">泛化能力受限于数据多样性与单目视角:补录的位置变体有限,对全新位置泛化一般;仅一路 front 相机使模型缺少多视角深度信息。其中"引入在线 RL"这条改进方向已在后续的 HIL-SERL 项目中落地(见上一张卡片),剩余方向为多相机采集与更多位置变体。</span>
+          <span class="lang-en">Generalization is bounded by data diversity and the monocular viewpoint: the added position variants are limited, so novel placements generalize only moderately, and a single front camera leaves the model without multi-view depth cues. Of the follow-ups I identified, "move to online RL" has since been realized in the HIL-SERL project above; multi-camera collection and more position variants remain.</span>
         </dd>
       </dl>
       <!-- 真机演示 GIF + 技术流程图(本地图片) -->
@@ -337,7 +401,7 @@
       </div>
     </div>
 
-    <!-- 项目2:SO-ARM101 ACT 抓取(VLA 的对比基线) -->
+    <!-- 项目3:SO-ARM101 ACT 抓取(VLA 的对比基线) -->
     <div class="proj reveal">
       <h3>
         <span class="lang-zh">SO-ARM101 机械臂抓取-放置 · ACT 模仿学习</span>
@@ -389,7 +453,7 @@
       </div>
     </div>
 
-    <!-- 项目3:储物小车(已完成) -->
+    <!-- 项目4:储物小车(已完成) -->
     <div class="proj reveal">
       <h3>
         <span class="lang-zh">PacePal 跑步陪伴机器人 · 整体结构设计</span>
@@ -446,7 +510,7 @@
       </div> -->
     </div>
 
-    <!-- 项目4:两轮自平衡机器人(进行中) -->
+    <!-- 项目5:两轮自平衡机器人(进行中) -->
     <div class="proj reveal">
       <h3>
         <span class="lang-zh">两轮自平衡机器人 · PPO 强化学习与 sim2sim 部署</span>
@@ -586,6 +650,7 @@
         <span class="tag core"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5l1.8 3.9 4.2.5-3.1 2.9.9 4.2L8 10.9 4.3 13l.9-4.2L2 5.9l4.2-.5z"/></svg><span class="lang-zh">强化学习 (RL)</span><span class="lang-en">Reinforcement Learning</span></span>
         <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12.5V9m3 3.5V6m3 6.5V3.5m3 9V7.5"/><path d="M1.5 14.5h13"/></svg><span class="lang-zh">模仿学习 (ACT)</span><span class="lang-en">Imitation Learning (ACT)</span></span>
         <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 8s2.2-3.8 6.5-3.8S14.5 8 14.5 8s-2.2 3.8-6.5 3.8S1.5 8 1.5 8z"/><circle cx="8" cy="8" r="1.6"/></svg><span class="lang-zh">视觉-语言-动作模型 (VLA / SmolVLA)</span><span class="lang-en">Vision-Language-Action (VLA / SmolVLA)</span></span>
+        <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.2a5.8 5.8 0 105.6 7.3"/><path d="M11 1.6l2.8 1.1-1.1 2.8"/><circle cx="8" cy="8" r="1.5"/></svg><span class="lang-zh">在线强化学习 (HIL-SERL / SAC)</span><span class="lang-en">Online RL (HIL-SERL / SAC)</span></span>
         <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h9l-2-2M14 11H5l2 2"/></svg>Sim2Real</span>
       </div>
     </div>
