@@ -1,289 +1,84 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>〇也 · 机器人运动控制</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="〇也（Li Bocheng）的机器人作品集。北京科技大学机器人工程，专注强化学习、模仿学习、具身智能与真机部署。">
+  <meta name="theme-color" content="#10130f">
+  <title>〇也 · 机器人工程与具身智能</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <!-- 本页无需构建或安装依赖，直接打开即可。配色在 :root，项目详情在各 article 中，中英文按 lang-zh / lang-en 成对编辑。 -->
+  <style>:root{--bg:#10130f;--surface:#191d17;--surface-2:#20251d;--text:#f3f2e9;--muted:#a6ad9f;--line:#343b2e;--accent:#d2eca1;--accent2:#d2eca1;--card:var(--surface);--radius:18px;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:100px}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}body::before{content:"";position:absolute;inset:0 0 auto;height:780px;background:radial-gradient(ellipse at 78% 20%,#46533324,transparent 55%);pointer-events:none}::selection{background:var(--accent);color:var(--bg)}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}button,a,summary{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:5px}img{max-width:100%;display:block}svg{width:18px;height:18px;flex:none}.wrap{width:min(1180px,calc(100% - 96px));margin:auto}.lang-en{display:none}body.show-en .lang-zh{display:none}body.show-en .lang-en{display:inline}[hidden]{display:none!important}.skip-link{position:fixed;top:12px;left:12px;z-index:100;transform:translateY(-160%);background:var(--accent);color:var(--bg);padding:10px 20px;border-radius:8px}.skip-link:focus{transform:none}.site-nav{position:sticky;top:0;z-index:30;background:#10130fe8;backdrop-filter:blur(18px);border-bottom:1px solid #343b2e99}.nav-inner{min-height:82px;display:flex;align-items:center;gap:30px}.brand{display:flex;align-items:center;gap:11px;font-size:21px;font-weight:700;letter-spacing:-1px}.brand img{width:34px;height:34px;border-radius:9px;background:#fff}.brand small{font-size:10px;letter-spacing:2px;font-weight:400;color:var(--muted);border-left:1px solid var(--line);padding-left:13px;margin-left:4px}.nav-links{display:flex;gap:27px;margin-left:auto;font-size:13px;color:var(--muted)}.nav-links a{position:relative;padding:8px 0}.nav-links a:hover,.nav-links a.active{color:var(--text)}.nav-links a.active:after{content:"";position:absolute;bottom:1px;left:0;right:0;height:2px;background:var(--accent)}.lang-toggle{border:1px solid var(--line);background:transparent;color:var(--text);padding:6px 12px;border-radius:6px;font-size:12px}.lang-toggle:hover{border-color:var(--accent)}.hero{padding:85px 0 0;position:relative}.hero-layout{display:grid;grid-template-columns:1.06fr 1fr;gap:68px;align-items:center}.eyebrow{font-family:"Cascadia Code",Consolas,monospace;color:var(--accent);font-size:11px;letter-spacing:2px;display:flex;align-items:center;gap:10px;text-transform:uppercase}.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}h1,h2,h3,h4,p{margin:0}.hero h1{font-size:clamp(40px,4.7vw,66px);font-weight:650;line-height:1.3;letter-spacing:-3px;margin:22px 0}.hero h1 em{font-style:normal;color:var(--accent)}.show-en .hero h1{font-size:clamp(40px,4.5vw,63px);line-height:1.1;letter-spacing:-2.5px}.hero .role{color:var(--text);font-size:16px;margin-bottom:14px}.hero-description{color:var(--muted);font-size:14px;line-height:1.95;max-width:480px}.hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:30px}.button{display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:12px 22px;border:1px solid var(--line);border-radius:7px;font-size:13px;font-weight:600;transition:background .2s,transform .2s}.button:hover{background:var(--surface-2);transform:translateY(-2px)}.button.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}.button.primary:hover{background:#e0f4bc}.hero-social{display:flex;align-items:center;gap:20px;margin-top:23px;color:var(--muted);font-size:12px}.hero-social a{display:flex;align-items:center;gap:7px}.hero-social a:hover{color:var(--accent)}.hero-social svg{width:14px;height:14px}.hero-visual{position:relative;min-width:0}.visual-top{display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:Consolas,monospace;font-size:10px;color:var(--muted);letter-spacing:1.5px;margin:0 2px 12px}.visual-top span:last-child{color:var(--accent);display:flex;align-items:center;gap:7px}.status-dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}.demo-frame{border:1px solid #525b40;border-radius:12px;overflow:hidden;background:var(--surface);position:relative}.demo-frame .media-zoom{position:relative;height:300px;display:block;width:100%;border:0;padding:0;background:var(--surface);overflow:hidden}.demo-frame img{width:100%;height:100%;object-fit:cover}.frame-caption{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 19px;font-size:12px;border-top:1px solid var(--line)}.frame-caption span:last-child{color:var(--accent);font-family:Consolas,monospace;font-size:10px}.visual-note{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11px;margin-top:14px}.visual-note:before{content:"↳";color:var(--accent);font-size:18px}.hero-bottom{margin-top:65px;padding:30px 0 32px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr;gap:32px;align-items:center}.hero-bottom .metric-intro{font-size:12px;color:var(--muted)}.metric-intro strong{display:block;color:var(--text);font-size:14px;font-weight:500;margin-bottom:3px}.hero-metric{border-left:1px solid var(--line);padding-left:32px}.hero-metric strong{font-size:34px;line-height:1.2;letter-spacing:-1px;font-weight:500;font-family:"Segoe UI",sans-serif}.hero-metric strong small{font-size:13px;letter-spacing:0;margin-left:7px;color:var(--muted)}.hero-metric>span{display:block;color:var(--muted);font-size:11px;margin-top:7px}.section{padding:83px 0}.section-kicker{font:11px Consolas,monospace;letter-spacing:2px;color:var(--accent);margin-bottom:13px}.section-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:33px}.section-heading h2{font-size:32px;line-height:1.4;font-weight:550;letter-spacing:-1px}.section-heading p{color:var(--muted);font-size:13px;max-width:390px}.project-toolbar{display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line);padding-bottom:21px;margin-bottom:30px}.filters{display:none;gap:8px;flex-wrap:wrap}.enhanced .filters{display:flex}.filter{border:1px solid transparent;color:var(--muted);background:transparent;padding:7px 13px;border-radius:6px;font-size:12px}.filter:hover{color:var(--text);background:var(--surface)}.filter[aria-pressed=true]{background:var(--surface-2);border-color:#586445;color:var(--accent)}.project-count{font:11px Consolas,monospace;letter-spacing:1px;color:var(--muted);white-space:nowrap}.project-card{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:24px;background:var(--surface);transition:border-color .2s}.project-card:hover{border-color:#64764b}.project-overview{display:grid;grid-template-columns:.96fr 1fr;gap:0;min-width:0}.project-media{padding:22px;display:flex;align-items:center;min-width:0;background:#0b0d09}.project-media .media-zoom{position:relative;width:100%;height:290px;border:0;background:#12150e;border-radius:10px;overflow:hidden;padding:0}.project-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.project-media.contain img{object-fit:contain;background:#f4f5f1}.media-zoom:hover img{transform:scale(1.025)}.zoom-hint{position:absolute;right:12px;bottom:12px;background:#10130fcc;border:1px solid #ffffff2e;color:#fff;font-size:11px;width:29px;height:29px;display:grid;place-items:center;border-radius:5px;pointer-events:none}.project-info{padding:30px 30px 26px;min-width:0}.project-kicker{display:flex;justify-content:space-between;gap:12px;align-items:center;font:10px Consolas,monospace;letter-spacing:1.4px;color:var(--accent);margin-bottom:13px}.project-index{color:var(--muted)}.project-info h3{font-size:24px;font-weight:550;letter-spacing:-.5px;line-height:1.45;margin-bottom:12px}.project-summary{font-size:13px;color:var(--muted);line-height:1.9;margin-bottom:17px}.project-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}.project-tags span{font:10px Consolas,monospace;border:1px solid #3c4334;border-radius:4px;padding:4px 8px;color:#b9c1af}.project-result{font-size:12px;color:var(--accent);border-top:1px solid var(--line);padding-top:15px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}.project-result strong{font-size:23px;font-weight:500;font-family:"Segoe UI",sans-serif;letter-spacing:-.5px}.project-result span{color:var(--muted)}.project-details{border-top:1px solid var(--line)}summary{cursor:pointer;list-style:none}summary::-webkit-details-marker{display:none}.project-details>summary{padding:15px 24px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--muted);transition:color .2s,background .2s}.project-details>summary:hover{color:var(--accent);background:#d2eca106}.project-details>summary::after{content:"+";font:20px Consolas,monospace;color:var(--accent)}.project-details[open]>summary::after{content:"−"}.detail-content{padding:8px 30px 30px}.detail-content .original-title{font-size:18px;color:var(--text);margin:10px 0}.detail-content .meta{color:var(--muted);font-size:12px;margin-bottom:24px}.detail-content dl{display:grid;grid-template-columns:80px 1fr;gap:18px 24px;font-size:14px;line-height:1.95;margin:0 0 26px}.detail-content dt{color:var(--accent);font-weight:500}.detail-content dd{margin:0;color:#c2c8bb}.detail-content dd.res{color:var(--accent)}.detail-content code{font-family:Consolas,monospace;font-size:.9em;padding:2px 5px;background:#d2eca110;border-radius:4px;overflow-wrap:anywhere}.detail-content b{color:var(--text);font-weight:600}.detail-content dd.res b{color:var(--accent)}.detail-content .gallery-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:16px!important}.detail-content .media-zoom{display:block;width:100%;padding:0;border:0;border-radius:9px;background:transparent;overflow:hidden}.detail-content img{border-color:var(--line)!important;max-height:540px;object-fit:contain!important;height:auto!important}.detail-content .plinks{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.plinks a{border:1px solid var(--line);padding:7px 13px;border-radius:5px;font-size:12px;color:var(--accent)}.plinks a:after{content:" ↗"}.plinks a:hover{background:var(--surface-2);border-color:var(--accent)}.badge{font-size:10px;color:var(--accent);border:1px solid #627744;padding:3px 7px;border-radius:4px;margin-left:8px;white-space:nowrap}.project-empty{color:var(--muted);padding:30px}.experience-section{border-top:1px solid var(--line);background:#141811}.about-strip{display:grid;grid-template-columns:1fr 1.4fr;gap:50px;border-bottom:1px solid var(--line);padding-bottom:32px;margin-bottom:39px}.about-strip p{font-size:14px;color:var(--muted)}.about-detail{font-size:13px;color:var(--muted)}.about-detail summary{color:var(--accent);display:flex;justify-content:space-between;gap:15px}.about-detail summary:after{content:"+"}.about-detail[open] summary:after{content:"−"}.about-detail .full-bio{margin-top:15px;font-size:13px;line-height:1.95}.exp{display:grid;grid-template-columns:230px 1fr;gap:7px 38px;padding:0 0 36px 25px;position:relative;border-left:1px solid var(--line);margin-left:7px;margin-bottom:8px}.exp:before{content:"";position:absolute;left:-4px;top:8px;width:7px;height:7px;background:var(--accent);border-radius:50%}.exp .when{grid-column:1;grid-row:1/4;font-size:11px;color:var(--muted);padding-top:4px;line-height:1.9}.exp .what{font-size:19px;font-weight:500;line-height:1.5}.exp .where{font-size:12px;color:var(--accent);margin-bottom:6px}.exp .desc{grid-column:2;font-size:13px;color:var(--muted);line-height:1.95}.exp .desc img{max-height:200px;width:auto!important;max-width:100%!important;object-fit:contain;cursor:zoom-in}.exp .desc .media-zoom{background:none;border:0;padding:0;max-width:360px;text-align:left}.exp .desc ul{margin:10px 0 0 18px!important}.exp .desc li{margin-bottom:7px}.stack-section{border-top:1px solid var(--line)}.stack-layout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 48px}.stack-group{padding:24px 0;border-bottom:1px solid var(--line)}.stack-group:first-child{grid-column:1/-1;padding-top:0}.stack-group h4{font-size:12px;font-weight:500;margin-bottom:14px;color:var(--muted)}.skills{display:flex;flex-wrap:wrap;gap:8px}.tag{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:#bfc6b5;background:var(--surface);border:1px solid var(--line);padding:8px 12px;border-radius:6px}.tag.core{color:var(--accent);border-color:#455638;background:#d2eca107}.tag svg{width:14px;height:14px}.stack-note{font-size:11px!important;margin-top:22px!important}.contact-section{padding:68px 0 58px;border-top:1px solid var(--line);background:var(--accent);color:var(--bg)}.contact-layout{display:flex;align-items:center;justify-content:space-between;gap:35px}.contact-section .section-kicker{color:#52643b}.contact-section h2{font-size:36px;font-weight:600;line-height:1.4;letter-spacing:-1px;margin-bottom:13px}.contact-section p{color:#47543b;font-size:13px}.contact-actions{display:flex;flex-direction:column;align-items:flex-start;gap:13px}.contact-email{font-size:18px;letter-spacing:-.5px;overflow-wrap:anywhere;border-bottom:1px solid #657a45;padding-bottom:5px}.contact-email:hover{border-bottom-color:var(--bg)}.contact-copy{background:transparent;border:0;padding:0;color:#3c4b2d;font-size:12px}.contact-copy:hover{text-decoration:underline}.contact-links{display:flex;gap:24px;font-size:12px;margin-top:5px}.contact-links a:hover{text-decoration:underline}footer{padding:27px 0;color:var(--muted);font-size:10px;font-family:Consolas,monospace;letter-spacing:.5px}.footer-inner{display:flex;justify-content:space-between;gap:20px}.back-top{position:fixed;bottom:24px;right:24px;z-index:25;width:39px;height:39px;border:1px solid var(--line);background:#20251dea;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:17px;box-shadow:0 6px 18px #0003}.lightbox{color:var(--text);border:1px solid #667255;border-radius:12px;background:var(--surface);padding:0;width:min(1100px,calc(100% - 32px));max-height:90vh}.lightbox::backdrop{background:#000c;backdrop-filter:blur(8px)}.lightbox-header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:12px 18px;font-size:12px;color:var(--muted)}.lightbox-close{width:32px;height:32px;display:grid;place-items:center;border:1px solid var(--line);border-radius:5px;background:var(--surface-2);color:var(--text);font-size:22px}.lightbox-image{width:100%;max-height:calc(90vh - 65px);object-fit:contain;background:#090b08}.reveal{opacity:1}.enhanced .reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}.enhanced .reveal.show{opacity:1;transform:none}body.show-en .project-info h3{font-size:22px}.show-en .hero-description{line-height:1.75}body.show-en .hero-layout{align-items:start}.show-en .hero-visual{padding-top:9px}
+@media(min-width:1600px){.hero h1{font-size:72px}.hero{padding-top:100px}.demo-frame .media-zoom{height:330px}}
+@media(max-width:1050px){.wrap{width:calc(100% - 64px)}.hero-layout{gap:36px}.hero h1{font-size:49px;letter-spacing:-2px}.show-en .hero h1{font-size:49px}.project-info{padding:24px}.project-info h3{font-size:22px}.project-media{padding:18px}.project-media .media-zoom{height:270px}.brand small{display:none}.hero-bottom{gap:20px}.hero-metric{padding-left:20px}.nav-links{gap:21px}}
+@media(max-width:760px){.wrap{width:calc(100% - 40px)}.nav-inner{min-height:68px;gap:16px;flex-wrap:wrap;padding:14px 0}.brand{font-size:19px}.brand img{width:29px;height:29px}.nav-links{gap:19px;font-size:12px;margin-left:auto}.nav-links a[href="#contact"]{display:none}.lang-toggle{font-size:11px;padding:5px 8px}.hero{padding-top:48px}.hero-layout{grid-template-columns:1fr;gap:34px}.hero h1{font-size:49px;margin:19px 0;letter-spacing:-2px}.show-en .hero h1{font-size:51px}.hero .role{font-size:15px}.hero-description{max-width:100%}.hero-actions{margin-top:24px}.hero-social{margin-top:18px}.demo-frame .media-zoom{height:auto;aspect-ratio:16/10}.hero-bottom{margin-top:34px;grid-template-columns:repeat(3,1fr);gap:14px;padding:23px 0}.hero-bottom .metric-intro{grid-column:1/-1;font-size:10px;padding-bottom:7px}.metric-intro strong{font-size:12px;display:inline;margin-right:8px}.hero-metric{padding-left:14px}.hero-metric:nth-child(2){padding-left:0;border:0}.hero-metric strong{font-size:29px}.hero-metric>span{font-size:10px}.section{padding:52px 0}.section-heading{display:block;margin-bottom:27px}.section-heading h2{font-size:28px;margin-bottom:11px}.section-heading p{font-size:12px;max-width:none}.project-toolbar{gap:8px}.filter{padding:6px 10px;font-size:11px}.project-count{font-size:10px}.project-overview{grid-template-columns:1fr}.project-media{padding:16px}.project-media .media-zoom{height:auto;aspect-ratio:16/10}.project-info{padding:23px}.project-info h3{font-size:23px}.project-summary{font-size:13px}.project-details>summary{padding:15px 23px}.detail-content{padding:5px 23px 23px}.detail-content dl{grid-template-columns:1fr;gap:7px;font-size:13px}.detail-content dt:not(:first-child){margin-top:13px}.detail-content .gallery-grid{grid-template-columns:1fr!important}.about-strip{grid-template-columns:1fr;gap:22px;padding-bottom:26px}.exp{grid-template-columns:1fr;gap:7px;padding-left:19px}.exp .when{grid-column:1;grid-row:auto;padding:0;margin-bottom:3px}.exp .desc{grid-column:1}.exp .what{font-size:18px}.stack-layout{grid-template-columns:1fr;gap:0}.stack-group:first-child{grid-column:1}.contact-layout{display:block}.contact-section{padding:43px 0}.contact-section h2{font-size:30px}.contact-actions{margin-top:28px}.contact-email{font-size:18px}.footer-inner{flex-direction:column;gap:5px}.back-top{right:15px;bottom:15px;width:35px;height:35px}.tag{font-size:11px}.show-en .hero-layout{align-items:center}}
+@media(max-width:400px){.nav-inner{gap:10px}.nav-links{gap:13px}.nav-links a{font-size:11px}.brand{gap:7px;font-size:17px}.brand img{width:25px;height:25px}.lang-toggle{padding:4px 6px}.hero h1{font-size:43px}.hero-metric strong{font-size:25px}.hero-metric strong small{font-size:10px;margin-left:3px}.project-count{display:none}.contact-email{font-size:16px}}
+.demo-frame .media-zoom{--media-url:url("hilserl-demo.webp")}.demo-frame .media-zoom::before,.project-media.portrait .media-zoom::before{content:"";position:absolute;inset:-20px;background-image:var(--media-url);background-size:cover;background-position:center;filter:blur(20px);opacity:.22;pointer-events:none}.demo-frame .media-zoom img,.project-media.portrait img{position:relative;object-fit:contain}.media-zoom .zoom-hint{z-index:1}
+.stack-group h3{font-size:12px;font-weight:500;margin-bottom:14px;color:var(--muted)}
+@media(max-width:760px){body.show-en .nav-inner{display:grid;grid-template-columns:1fr auto}.show-en .nav-links{grid-column:1/-1;grid-row:2;justify-content:space-between;margin:0;padding-top:2px;border-top:1px solid var(--line)}.show-en .lang-toggle{grid-column:2;grid-row:1}.show-en .nav-links a[href="#contact"]{display:inline}.show-en .nav-inner{gap:9px 20px}.project-kicker{letter-spacing:1px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}.enhanced .reveal{opacity:1;transform:none}.media-zoom:hover img{transform:none}}
+@media(max-width:400px){.hero h1{font-size:clamp(34px,11vw,43px)}}
 
-<!--
-==================================================================
-  【怎么改这个网页 · 新手必读】(这种灰字是"注释",网页上看不到)
-==================================================================
-
-  0) 改完怎么看效果?
-     存盘(Ctrl+S)→ 双击 index.html;若浏览器已打开,按 F5 刷新。
-
-  1) 被    包起来的,都是给你自己看的提示,
-     留着不影响网页,也可以删掉。
-
-  2) 网页上显示的文字,夹在  >  和  <  之间。例如:
-            <h1>〇也</h1>
-     你只改中间的"〇也",左右的 <h1> </h1> 别动。
-
-  3) 下面 <style>...</style> 那一大段控制"长相"(颜色/字号/间距)。
-     只想改文字的话,别碰这段最安全。想换配色看下面 :root 的注释。
-
-  4) 链接怎么改?看  href="..."  引号里的网址:
-            <a href="https://github.com/...">GitHub</a>
-     引号里换成你的真实网址;引号外的"GitHub"是按钮上显示的字。
-
-  5) 怕改坏?动手前先把本文件复制一份备份(比如改名 index_备份.html)。
-==================================================================
--->
-
-<style>
-  :root{
-    /* 【配色总开关】想换主题色,只改这几个值就行,全站自动跟着变。
-       颜色是 #RRGGBB 格式。想要别的颜色,百度"颜色选择器"取个 # 开头的码替换。
-         --bg    页面背景色(深灰黑)
-         --card  卡片背景色(比背景略亮)
-         --line  分割线/边框色
-         --text  正文文字色(接近白)
-         --muted 次要文字色(灰,用于说明性文字)
-         --accent  主强调色(蓝,链接和标题竖条)
-         --accent2 次强调色(绿,主攻技能和量化结果) */
-    --bg:#0d1117; --card:#161b22; --line:#30363d;
-    --text:#e6edf3; --muted:#8b949e; --accent:#58a6ff; --accent2:#3fb950;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{
-    font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
-    background:var(--bg);color:var(--text);line-height:1.7;
-    position:relative;
-  }
-  /* 【背景水印】用 logo 平铺铺满整个页面,固定在最底层,很淡,不影响阅读。
-     - background-size 控制水印图案大小(越大越稀疏)
-     - opacity 控制深浅(越小越淡)
-     想关掉水印:把整个 body::before 这段删掉即可。 */
-  body::before{
-    content:"";position:fixed;inset:0;z-index:-1;
-    background-image:url("logo.png");
-    background-repeat:repeat;
-    background-size:120px;
-    opacity:.04;
-    pointer-events:none;
-  }
-  a{color:var(--accent);text-decoration:none}
-  a:hover{text-decoration:underline}
-  .wrap{max-width:860px;margin:0 auto;padding:0 24px}
-  section{padding:56px 0;border-bottom:1px solid var(--line)}
-  h2{font-size:22px;margin-bottom:24px;display:flex;align-items:center;gap:10px}
-  h2::before{content:"";width:4px;height:22px;background:var(--accent);border-radius:2px}
-
-  /* Hero */
-  .hero{padding:80px 0 56px;border-bottom:1px solid var(--line)}
-  /* 首屏头像 logo:圆形,带细边框 */
-  .avatar{
-    width:96px;height:96px;border-radius:50%;object-fit:cover;
-    border:2px solid var(--line);margin-bottom:20px;display:block;
-  }
-  .hero h1{font-size:40px;font-weight:700;margin-bottom:8px}
-  .hero .role{font-size:20px;color:var(--accent);margin-bottom:20px}
-  .hero p{color:var(--muted);max-width:640px}
-  .links{margin-top:24px;display:flex;gap:14px;flex-wrap:wrap}
-  .links a{
-    border:1px solid var(--line);padding:8px 16px;border-radius:8px;
-    color:var(--text);font-size:14px;transition:.2s;
-    display:inline-flex;align-items:center;gap:7px;   /* 让图标和文字并排居中 */
-  }
-  .links a:hover{border-color:var(--accent);text-decoration:none;background:var(--card)}
-  /* 链接里的小图标:用 currentColor 自动跟随文字颜色 → 单色,不会彩色 */
-  .links a svg{width:16px;height:16px;flex:none}
-
-  /* Skills */
-  .skills{display:flex;flex-wrap:wrap;gap:10px}
-  .tag{
-    background:var(--card);border:1px solid var(--line);
-    padding:6px 14px;border-radius:20px;font-size:14px;color:var(--muted);
-    display:inline-flex;align-items:center;gap:6px;   /* 图标和文字并排 */
-  }
-  .tag.core{color:var(--accent2);border-color:var(--accent2)}
-  /* 标签里的小图标:跟随文字颜色 → 单色(灰色标签灰图标,绿色标签绿图标) */
-  .tag svg{width:14px;height:14px;flex:none}
-
-  /* 技术栈分类 */
-  .stack-group{margin-bottom:20px}
-  .stack-group h4{
-    font-size:15px;color:var(--muted);font-weight:600;
-    margin-bottom:10px;letter-spacing:.5px;
-  }
-
-  /* 经历条目(每段实习/经历一条) */
-  .exp{
-    border-left:2px solid var(--line);padding:2px 0 2px 20px;
-    margin-bottom:22px;position:relative;
-  }
-  .exp::before{                       /* 左侧时间线上的小圆点 */
-    content:"";position:absolute;left:-6px;top:6px;
-    width:10px;height:10px;border-radius:50%;
-    background:var(--accent);border:2px solid var(--bg);
-  }
-  .exp .when{color:var(--muted);font-size:13px;margin-bottom:4px}
-  .exp .what{font-size:17px;font-weight:600;margin-bottom:2px}
-  .exp .where{color:var(--accent);font-size:14px;margin-bottom:8px}
-  .exp .desc{color:var(--muted);font-size:15px}
-
-  /* 【中英切换】默认显示中文(.lang-zh),隐藏英文(.lang-en)。
-     点右上角按钮后,body 加上 .show-en,就反过来显示英文。
-     你只要保证每处文字都写了中、英两份即可,显示逻辑这里管好了。 */
-  .lang-en{display:none}
-  body.show-en .lang-zh{display:none}
-  body.show-en .lang-en{display:inline}
-  /* 右上角那个切换按钮的长相 */
-  .lang-toggle{
-    position:fixed;top:16px;right:16px;z-index:99;
-    background:var(--card);border:1px solid var(--line);color:var(--text);
-    padding:6px 14px;border-radius:8px;font-size:14px;cursor:pointer;
-  }
-  .lang-toggle:hover{border-color:var(--accent)}
-
-  /* ========== 交互动画 ========== */
-  /* 点页内链接(如"作品集")时平滑滚动过去,而不是瞬间跳 */
-  html{scroll-behavior:smooth}
-
-  /* 【进入动画】打开页面时,顶部标题/头衔/简介/按钮依次淡入上浮 */
-  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-  .hero h1,.hero .role,.hero p,.hero .links{opacity:0;animation:fadeUp .6s ease forwards}
-  .hero .role{animation-delay:.12s}
-  .hero p{animation-delay:.24s}
-  .hero .links{animation-delay:.36s}
-
-  /* 【滚动渐入】带 .reveal 的元素初始隐藏并下移,滚动进视野后由脚本加 .show 触发淡入 */
-  .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
-  .reveal.show{opacity:1;transform:translateY(0)}
-
-  /* 【卡片悬停】鼠标移到项目卡上,轻轻抬起 + 蓝色边框发光 */
-  .proj{transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
-  .proj:hover{
-    transform:translateY(-4px);border-color:var(--accent);
-    box-shadow:0 8px 28px rgba(88,166,255,.12);
-  }
-
-  /* 【标签悬停】技术栈标签鼠标移上去:亮起、微微放大 */
-  .tag{transition:transform .2s ease,border-color .2s ease,color .2s ease,background .2s ease}
-  .tag:hover{transform:translateY(-2px) scale(1.05);border-color:var(--accent);color:var(--text)}
-
-  /* 【链接按钮悬停】顶部按钮上移一点,更有"可点"的反馈 */
-  .links a{transition:.2s ease}
-  .links a:hover{transform:translateY(-2px)}
-
-  /* 尊重"减少动态效果"的系统设置:开了就关掉所有动画,避免晕动不适 */
-  @media(prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-    .reveal{opacity:1;transform:none}
-  }
-
-  /* Projects */
-  .proj{
-    background:var(--card);border:1px solid var(--line);border-radius:12px;
-    padding:24px;margin-bottom:20px;
-  }
-  .proj h3{font-size:18px;margin-bottom:4px}
-  .proj .badge{
-    display:inline-block;font-size:12px;color:var(--accent2);
-    border:1px solid var(--accent2);border-radius:4px;padding:1px 8px;margin-left:8px;
-  }
-  .proj .meta{color:var(--muted);font-size:13px;margin-bottom:14px}
-  .proj dl{display:grid;grid-template-columns:84px 1fr;gap:8px 16px;font-size:15px}
-  .proj dt{color:var(--accent);font-weight:600}
-  .proj dd{color:var(--text)}
-  .proj .res{color:var(--accent2)}
-  /* 正文里的代码片段(如文件名、参数名),灰底小方块 */
-  code{
-    font-family:"Consolas","SF Mono",monospace;font-size:.9em;
-    background:rgba(110,118,129,.2);padding:1px 5px;border-radius:4px;
-  }
-  .proj .plinks{margin-top:14px;font-size:14px;display:flex;gap:16px}
-
-  /* Contact */
-  .contact p{color:var(--muted);margin-bottom:8px}
-  footer{padding:32px 0;text-align:center;color:var(--muted);font-size:13px}
-  @media(max-width:600px){
-    .hero h1{font-size:30px}
-    .proj dl{grid-template-columns:1fr}
-    .proj dt{margin-top:6px}
-  }
 </style>
 </head>
-<body>
-
-<!-- 【中英切换按钮】固定在右上角。点一下在中文/English 之间切换。
-     按钮文字本身也会跟着变(中文界面显示 "English",英文界面显示 "中文")。
-     一般不用动这块;脚本在文件最底部 </body> 之前。 -->
-<button class="lang-toggle" onclick="toggleLang()">
-  <span class="lang-zh">English</span><span class="lang-en">中文</span>
-</button>
-
-<!-- ===== 顶部介绍 ===== -->
-<!-- 【第①块 顶部】整个网页最上面那块大标题区。
-     - <h1> 里是你的名字
-     - class="role" 那行是你的方向/头衔
-     - <p> 里是一句话自我介绍
-     - class="links" 里是几个按钮(GitHub/邮箱/作品集/简历) -->
-<header class="hero">
-  <div class="wrap">
-    <!-- 头像 logo:图片文件是同目录的 logo.png,想换头像就替换这个文件 -->
-    <img class="avatar" src="logo.png" alt="〇也 logo">
-    <!-- 名字:中英各一份。改时连两份一起改。 -->
-    <h1><span class="lang-zh">〇也</span><span class="lang-en">LingYe</span></h1>
-    <div class="role">
-      <span class="lang-zh">机器人工程 · 具身智能方向</span>
-      <span class="lang-en">Robotics Engineering · Embodied AI</span>
+<body id="top">
+  <a class="skip-link" href="#projects"><span class="lang-zh">跳转到作品集</span><span class="lang-en">Skip to projects</span></a>
+  <header class="site-nav"><div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="〇也 · 回到首页"><img src="logo.png" alt="" width="34" height="34"><span><span class="lang-zh">〇也</span><span class="lang-en">LingYe</span></span><small>ROBOTICS / AI</small></a>
+    <nav class="nav-links" aria-label="主导航 / Main navigation">
+      <a href="#projects"><span class="lang-zh">作品</span><span class="lang-en">Projects</span></a><a href="#exp"><span class="lang-zh">经历</span><span class="lang-en">Experience</span></a><a href="#stack"><span class="lang-zh">技术栈</span><span class="lang-en">Stack</span></a><a href="#contact"><span class="lang-zh">联系</span><span class="lang-en">Contact</span></a>
+    </nav>
+    <button type="button" class="lang-toggle" aria-label="Switch to English"><span class="lang-zh">EN ↗</span><span class="lang-en">中文 ↗</span></button>
+  </div></header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title"><div class="wrap">
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <div class="eyebrow">LI BOCHENG / ROBOTICS PORTFOLIO</div>
+          <h1 id="hero-title"><span class="lang-zh">让智能，<br>在<em>真实世界</em>行动。</span><span class="lang-en">Teaching robots<br>to act in the<br><em>real world.</em></span></h1>
+          <p class="role"><span class="lang-zh">〇也 · 机器人工程 / 具身智能</span><span class="lang-en">LingYe · Robotics / Embodied AI</span></p>
+          <p class="hero-description"><span class="lang-zh">北京科技大学机器人工程（科创班）大三在读。<br>从仿真中的策略学习，到机械臂的真实行动，探索强化学习、模仿学习与机器人控制。</span><span class="lang-en">Robotics Engineering junior at the University of Science and Technology Beijing. Exploring reinforcement learning, imitation learning, and control — from simulation to physical robots.</span></p>
+          <div class="hero-actions"><a class="button primary" href="#projects"><span class="lang-zh">探索我的作品</span><span class="lang-en">Explore my work</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a><a class="button" href="resume.pdf" target="_blank" rel="noopener noreferrer"><span class="lang-zh">查看简历</span><span class="lang-en">View résumé</span><span aria-hidden="true">↗</span></a></div>
+          <div class="hero-social"><a href="https://github.com/oye-Li-bc" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a><a href="mailto:libocheng1632@outlook.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg><span class="lang-zh">与我联系</span><span class="lang-en">Get in touch</span></a></div>
+        </div>
+        <div class="hero-visual">
+          <div class="visual-top"><span>SO-ARM101 / HIL-SERL</span><span><i class="status-dot" aria-hidden="true"></i>REAL ROBOT</span></div>
+          <div class="demo-frame"><button type="button" class="media-zoom" aria-label="查看 HIL-SERL 真机演示 / Zoom hardware demo"><img src="hilserl-demo.webp" alt="HIL-SERL 策略自主将物体推入目标区域" fetchpriority="high" decoding="async"><span class="zoom-hint" aria-hidden="true">⤢</span></button><div class="frame-caption"><span><span class="lang-zh">从人的示教，到自主行动</span><span class="lang-en">From human guidance to autonomous action</span></span><span>POLICY @ 21K</span></div></div>
+          <p class="visual-note"><span class="lang-zh">真机在线强化学习 · 原速演示 · 点击放大</span><span class="lang-en">On-robot online RL · real-time demo · click to enlarge</span></p>
+        </div>
+      </div>
+      <div class="hero-bottom">
+        <div class="metric-intro"><strong><span class="lang-zh">HIL-SERL 真机实验</span><span class="lang-en">HIL-SERL hardware experiment</span></strong><span class="lang-zh">少量示教，持续学习。</span><span class="lang-en">Few demonstrations. Continuous learning.</span></div>
+        <div class="hero-metric"><strong>12<small><span class="lang-zh">条</span><span class="lang-en">demos</span></small></strong><span><span class="lang-zh">起始示教数据</span><span class="lang-en">Initial demonstrations</span></span></div>
+        <div class="hero-metric"><strong>~45<small>min</small></strong><span><span class="lang-zh">21,000 步真机训练</span><span class="lang-en">21,000 training steps</span></span></div>
+        <div class="hero-metric"><strong>20/20</strong><span><span class="lang-zh">换位测试 · 本实验</span><span class="lang-en">Successful repositioned trials</span></span></div>
+      </div>
+    </div></section>
+    <section class="section projects-section" id="projects" aria-labelledby="projects-title"><div class="wrap">
+      <p class="section-kicker">01 / SELECTED WORK</p>
+      <div class="section-heading"><h2 id="projects-title"><span class="lang-zh">把想法，变成行动。</span><span class="lang-en">Ideas, put into motion.</span></h2><p><span class="lang-zh">从结构设计到策略学习。每一个项目，都包含亲手完成的实验与工程细节。</span><span class="lang-en">From mechanical design to learned policies. Each project is grounded in hands-on experiments and engineering.</span></p></div>
+      <div class="project-toolbar"><div class="filters" role="group" aria-label="筛选项目 / Filter projects">
+        <button type="button" class="filter" data-filter="all" aria-pressed="true"><span class="lang-zh">全部</span><span class="lang-en">All work</span></button><button type="button" class="filter" data-filter="rl" aria-pressed="false"><span class="lang-zh">强化学习</span><span class="lang-en">RL & Control</span></button><button type="button" class="filter" data-filter="il" aria-pressed="false"><span class="lang-zh">模仿学习 / VLA</span><span class="lang-en">IL & VLA</span></button><button type="button" class="filter" data-filter="design" aria-pressed="false"><span class="lang-zh">结构设计</span><span class="lang-en">Design</span></button>
+      </div><span class="project-count" aria-live="polite" aria-atomic="true">05 个项目</span></div>
+      <article class="project-card reveal" id="project-1" data-category="rl">
+    <div class="project-overview">
+      <div class="project-media portrait"><button class="media-zoom" type="button" style="--media-url:url('hilserl-demo.webp')" aria-label="查看大图 / Zoom: HIL-SERL 真机推物体演示"><img src="hilserl-demo.webp" alt="HIL-SERL 真机推物体演示" loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">⤢</span></button></div>
+      <div class="project-info"><div class="project-kicker"><span>REAL-WORLD REINFORCEMENT LEARNING</span><span class="project-index">01</span></div>
+        <h3><span class="lang-zh">HIL-SERL · 真机在线强化学习</span><span class="lang-en">HIL-SERL · Learning on a Real Robot</span></h3>
+        <p class="project-summary"><span class="lang-zh">从 12 条示教起步，让 SO-ARM101 在人的干预下持续学习，完成自主推物体与失败纠正。独立完成适配、标定、训练和真机测试。</span><span class="lang-en">Starting with 12 demonstrations, the SO-ARM101 learns with human intervention to push objects and recover from errors. I owned adaptation, calibration, training, and hardware evaluation.</span></p>
+        <div class="project-tags"><span>HIL-SERL</span><span>SAC</span><span>LeRobot</span><span>SO-ARM101</span></div>
+        <div class="project-result"><strong>20 / 20</strong><span><span class="lang-zh">换位测试成功 · 本次实验</span><span class="lang-en">successful repositioned trials · this experiment</span></span></div>
+      </div>
     </div>
-    <p>
-      <span class="lang-zh">北京科技大学 · 机器人工程(科创班)大三在读,李泽湘老师体系下新工科改革试验。专注机器人控制与具身智能(仿真 / 强化学习 / 模仿学习 ),在isaaclab 里曾对两款机器人进行过PPO强化学习，并在Mujoco中成功部署策略实现sim2sim。在lerobot框架下使用so-arm101完成了act与smolvla的采集训练部署实现物体抓取移动放置;并在真机上完成 HIL-SERL 人在回路在线强化学习,仅 12 条示教起步、21,000 步约 45 分钟训练,20 次更换起始位置的测试全部成功,失败能自己纠正。</span>
-      <span class="lang-en">Junior in Robotics Engineering (Innovation Class) at University of Science and Technology Beijing — part of the new-engineering reform under Prof. Zexiang Li's program. Focused on robot control and embodied AI (simulation / reinforcement learning / imitation learning). Trained PPO policies for two different robots in Isaac Lab and deployed them to MuJoCo for successful sim-to-sim transfer. On a real SO-ARM101 arm, ran the full data-collection → training → deployment loop with both ACT and SmolVLA to achieve pick-and-place, then took it further with human-in-the-loop online RL (HIL-SERL): starting from just 12 demonstrations, 21,000 steps (~45 min) of on-robot training, and 20/20 success across repositioned trials — with the policy correcting its own failures.</span>
-    </p>
-    <div class="links">
-      <!-- 按钮改这里:href="网址" 引号内换成真实链接;> < 之间是按钮文字。
-           每个 <svg>...</svg> 是前面的单色小图标,跟着文字颜色走,一般不用动。
-           暂时没有的链接(如简历),可以把整行 <a ...>...</a> 删掉。 -->
-      <a href="https://github.com/oye-Li-bc" target="_blank">
-        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        GitHub
-      </a>
-      <a href="mailto:libocheng1632@outlook.com">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.5"/><path d="M2 4l6 4.5L14 4"/></svg>
-        libocheng1632@outlook.com
-      </a>
-      <a href="#projects">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><path d="M1.5 6h13M5 2.5v3"/></svg>
-        <span class="lang-zh">作品集</span><span class="lang-en">Projects</span>
-      </a>
-      <a href="resume.pdf" target="_blank">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M9 1.5H4a1 1 0 00-1 1v11a1 1 0 001 1h8a1 1 0 001-1V5.5L9 1.5z"/><path d="M9 1.5v4h4M5.5 8.5h5M5.5 11h5"/></svg>
-        <span class="lang-zh">简历 PDF</span><span class="lang-en">Resume PDF</span>
-      </a>
-    </div>
-  </div>
-</header>
-
-<!-- ===== 作品集 ===== -->
-<!-- 【第②块 作品集 · 最重要】每个 <div class="proj">...</div> 是一张项目卡片。
-     ┌ 怎么加一个新项目?把任意一整张 <div class="proj"> ... </div> 复制一份,改里面文字。
-     ┌ 怎么删项目?把那一整张 <div class="proj"> ... </div> 删掉。
-     ┌ 卡片里的结构(照着填,这就是给 HR 看的"五段式"):
-        <h3>      项目标题      <span class="badge">状态</span> ← badge 是右边小绿框,如"进行中",不要就删掉这个 span
-        class="meta"  一行小灰字:团队/个人 · 你的角色 · 用到的工具
-        <dl> 里是五段式,每段一对:
-            <dt>小标题(蓝色)</dt>  <dd>内容</dd>
-        class="res"   绿色高亮,专门放量化结果(数字!别写"效果良好")
-        class="plinks" 底部链接:代码仓库 / 演示视频,href="#" 换成真实网址 -->
-<section id="projects">
-  <div class="wrap">
-    <h2><span class="lang-zh">作品集</span><span class="lang-en">Projects</span></h2>
-
-    <!-- 项目1:SO-ARM101 HIL-SERL 真机在线强化学习(最新,成果最硬,排最前) -->
-    <div class="proj reveal">
-      <h3>
+    <details class="project-details"><summary><span class="lang-zh">查看技术方案、实验结果与项目链接</span><span class="lang-en">Explore approach, results & project links</span></summary>
+      <div class="detail-content"><h4 class="original-title">
         <span class="lang-zh">SO-ARM101 推物体 · HIL-SERL 真机在线强化学习</span>
         <span class="lang-en">SO-ARM101 Object Pushing · HIL-SERL Real-Robot Online RL</span>
-      </h3>
-      <div class="meta">
+      </h4><div class="meta">
         <span class="lang-zh">个人项目 · 独立完成全流程 · LeRobot / HIL-SERL / SAC / SO-ARM101</span>
         <span class="lang-en">Personal project · end-to-end solo · LeRobot / HIL-SERL / SAC / SO-ARM101</span>
-      </div>
-      <dl>
+      </div><dl>
         <dt><span class="lang-zh">背景</span><span class="lang-en">Context</span></dt>
         <dd>
           <span class="lang-zh">模仿学习(ACT / SmolVLA)的瓶颈很明确:示教要几十条,而策略上限就是示教水平、做错了不会自己纠。HIL-SERL 换了思路 —— 只用约 10 条示教起手,之后让机械臂自己跑,推歪了人接管一下,接管数据再喂回强化学习,策略越跑越不需要人管。这个项目正是我在 SmolVLA 卡片里写的"引入在线 RL"改进方向的落地。</span>
@@ -315,39 +110,47 @@
           <span class="lang-en">Success is judged by a human keypress rather than a learned reward classifier — I tried the classifier but its predictions were unstable, so I disabled it and reverted to manual keying, matching the reference route's own conclusion. Also, training metrics are sent only to wandb: with wandb disabled in the config, nothing appears in the terminal or logs, and a missed run cannot be recovered after the fact.</span>
         </dd>
       </dl>
-      <!-- 真机演示动图 + Actor / Critic 训练曲线(本地图片) -->
+      
       <div style="margin-top:16px">
         <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">真机演示 · 21,000 步策略自主把物体推进目标区(原速)</span><span class="lang-en">Hardware demo · the 21,000-step policy pushing the object into the target zone (real time)</span></p>
-        <img src="hilserl-demo.webp" alt="HIL-SERL 真机推物体演示" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line)">
+        <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: HIL-SERL 真机推物体演示"><img loading="lazy" decoding="async" src="hilserl-demo.webp" alt="HIL-SERL 真机推物体演示" style="width:100%;border-radius:8px;border:1px solid var(--line)"></button>
       </div>
-      <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="gallery-grid" style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
         <div>
           <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">Actor loss</span><span class="lang-en">Actor loss</span></p>
-          <img src="hilserl-loss-actor.png" alt="Actor loss 曲线" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+          <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: Actor loss 曲线"><img loading="lazy" decoding="async" src="hilserl-loss-actor.png" alt="Actor loss 曲线" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff"></button>
         </div>
         <div>
           <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">Critic loss</span><span class="lang-en">Critic loss</span></p>
-          <img src="hilserl-loss-critic.png" alt="Critic loss 曲线" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+          <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: Critic loss 曲线"><img loading="lazy" decoding="async" src="hilserl-loss-critic.png" alt="Critic loss 曲线" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff"></button>
         </div>
       </div>
       <div class="plinks">
-        <a href="https://github.com/oye-Li-bc/so101-hilserl-pushing" target="_blank"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
-        <a href="https://github.com/oye-Li-bc/so101-hilserl-pushing/blob/main/results/demo_video/policy_21000_full.mp4" target="_blank"><span class="lang-zh">完整测试视频</span><span class="lang-en">Full test video</span></a>
-        <a href="https://github.com/oye-Li-bc/so101-hilserl-pushing/blob/main/docs/05-%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95.md" target="_blank"><span class="lang-zh">实验记录</span><span class="lang-en">Experiment log</span></a>
+        <a href="https://github.com/oye-Li-bc/so101-hilserl-pushing" target="_blank" rel="noopener noreferrer"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
+        <a href="https://github.com/oye-Li-bc/so101-hilserl-pushing/blob/main/results/demo_video/policy_21000_full.mp4" target="_blank" rel="noopener noreferrer"><span class="lang-zh">完整测试视频</span><span class="lang-en">Full test video</span></a>
+        <a href="https://github.com/oye-Li-bc/so101-hilserl-pushing/blob/main/docs/05-%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95.md" target="_blank" rel="noopener noreferrer"><span class="lang-zh">实验记录</span><span class="lang-en">Experiment log</span></a>
       </div>
     </div>
-
-    <!-- 项目2:SO-ARM101 SmolVLA 抓取(VLA 路线) -->
-    <div class="proj reveal">
-      <h3>
+    </details>
+  </article>
+<article class="project-card reveal" id="project-2" data-category="il">
+    <div class="project-overview">
+      <div class="project-media"><button class="media-zoom" type="button" style="--media-url:url('smolvla-demo.gif')" aria-label="查看大图 / Zoom: SmolVLA 真机抓取演示"><img src="smolvla-demo.gif" alt="SmolVLA 真机抓取演示" loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">⤢</span></button></div>
+      <div class="project-info"><div class="project-kicker"><span>VISION · LANGUAGE · ACTION</span><span class="project-index">02</span></div>
+        <h3><span class="lang-zh">SmolVLA · 视觉语言驱动抓取</span><span class="lang-en">SmolVLA · Language-Guided Manipulation</span></h3>
+        <p class="project-summary"><span class="lang-zh">在低成本机械臂上微调视觉-语言-动作模型。通过对照实验定位悬空夹取问题，补录示教后完成抓取与放置。</span><span class="lang-en">Fine-tuned a vision-language-action model on a low-cost arm. A controlled experiment traced an empty-air grasp to demonstration quality; targeted data collection resolved it.</span></p>
+        <div class="project-tags"><span>SmolVLA</span><span>Flow Matching</span><span>PyTorch</span><span>LeRobot</span></div>
+        <div class="project-result"><strong>55</strong><span><span class="lang-zh">条示教 · 15,625 帧训练数据</span><span class="lang-en">demonstrations · 15,625 frames</span></span></div>
+      </div>
+    </div>
+    <details class="project-details"><summary><span class="lang-zh">查看技术方案、实验结果与项目链接</span><span class="lang-en">Explore approach, results & project links</span></summary>
+      <div class="detail-content"><h4 class="original-title">
         <span class="lang-zh">SO-ARM101 机械臂抓取-放置 · SmolVLA 视觉-语言-动作模型微调</span>
         <span class="lang-en">SO-ARM101 Pick-and-Place · SmolVLA Vision-Language-Action Fine-Tuning</span>
-      </h3>
-      <div class="meta">
+      </h4><div class="meta">
         <span class="lang-zh">个人项目 · 独立完成全流程 · LeRobot / SmolVLA / PyTorch / SO-ARM101</span>
         <span class="lang-en">Personal project · end-to-end solo · LeRobot / SmolVLA / PyTorch / SO-ARM101</span>
-      </div>
-      <dl>
+      </div><dl>
         <dt><span class="lang-zh">背景</span><span class="lang-en">Context</span></dt>
         <dd>
           <span class="lang-zh">在完成 ACT 模仿学习闭环之后,进一步探索视觉-语言-动作模型(VLA)路线:用大规模预训练的 VLA 权重在低成本机械臂上做小样本微调,验证"预训练先验能否带来动作质量增益",并与 ACT 基线做同任务对比。</span>
@@ -384,34 +187,42 @@
           <span class="lang-en">Generalization is bounded by data diversity and the monocular viewpoint: the added position variants are limited, so novel placements generalize only moderately, and a single front camera leaves the model without multi-view depth cues. Of the follow-ups I identified, "move to online RL" has since been realized in the HIL-SERL project above; multi-camera collection and more position variants remain.</span>
         </dd>
       </dl>
-      <!-- 真机演示 GIF + 技术流程图(本地图片) -->
+      
       <div style="margin-top:16px">
         <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">真机演示 · 抓取纸巾卷并放置到目标区域</span><span class="lang-en">Hardware demo · grasping the tissue roll and placing it on the target</span></p>
-        <img src="smolvla-demo.gif" alt="SmolVLA 真机抓取演示" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line)">
+        <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: SmolVLA 真机抓取演示"><img loading="lazy" decoding="async" src="smolvla-demo.gif" alt="SmolVLA 真机抓取演示" style="width:100%;border-radius:8px;border:1px solid var(--line)"></button>
       </div>
       <div style="margin-top:10px">
         <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">技术链路 · 采集 → 合并 → 微调 → 部署</span><span class="lang-en">Pipeline · collect → merge → fine-tune → deploy</span></p>
-        <img src="smolvla-pipeline.png" alt="SmolVLA 技术流程图" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+        <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: SmolVLA 技术流程图"><img loading="lazy" decoding="async" src="smolvla-pipeline.png" alt="SmolVLA 技术流程图" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff"></button>
       </div>
       <div class="plinks">
-        <a href="https://github.com/oye-Li-bc/so101-smolvla-grasping" target="_blank"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
-        <a href="https://github.com/oye-Li-bc/so101-smolvla-grasping/releases/tag/v1.0" target="_blank"><span class="lang-zh">完整演示视频</span><span class="lang-en">Full demo video</span></a>
-        <a href="https://huggingface.co/oye-Li-bc/oye_tissue_smolvla" target="_blank"><span class="lang-zh">模型权重</span><span class="lang-en">Model weights</span></a>
-        <a href="https://github.com/oye-Li-bc/so101-smolvla-grasping/blob/main/docs/05-%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95.md" target="_blank"><span class="lang-zh">实验记录</span><span class="lang-en">Experiment log</span></a>
+        <a href="https://github.com/oye-Li-bc/so101-smolvla-grasping" target="_blank" rel="noopener noreferrer"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
+        <a href="https://github.com/oye-Li-bc/so101-smolvla-grasping/releases/tag/v1.0" target="_blank" rel="noopener noreferrer"><span class="lang-zh">完整演示视频</span><span class="lang-en">Full demo video</span></a>
+        <a href="https://huggingface.co/oye-Li-bc/oye_tissue_smolvla" target="_blank" rel="noopener noreferrer"><span class="lang-zh">模型权重</span><span class="lang-en">Model weights</span></a>
+        <a href="https://github.com/oye-Li-bc/so101-smolvla-grasping/blob/main/docs/05-%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95.md" target="_blank" rel="noopener noreferrer"><span class="lang-zh">实验记录</span><span class="lang-en">Experiment log</span></a>
       </div>
     </div>
-
-    <!-- 项目3:SO-ARM101 ACT 抓取(VLA 的对比基线) -->
-    <div class="proj reveal">
-      <h3>
+    </details>
+  </article>
+<article class="project-card reveal" id="project-3" data-category="il">
+    <div class="project-overview">
+      <div class="project-media"><button class="media-zoom" type="button" style="--media-url:url('so101-demo.gif')" aria-label="查看大图 / Zoom: ACT 真机抓取演示"><img src="so101-demo.gif" alt="ACT 真机抓取演示" loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">⤢</span></button></div>
+      <div class="project-info"><div class="project-kicker"><span>IMITATION LEARNING BASELINE</span><span class="project-index">03</span></div>
+        <h3><span class="lang-zh">ACT · 从示教到真机部署</span><span class="lang-en">ACT · From Demonstration to Deployment</span></h3>
+        <p class="project-summary"><span class="lang-zh">打通示教采集、ACT 训练、部署与迭代闭环，比较动作块长度与示教数量，建立抓取任务的模仿学习基线。</span><span class="lang-en">Closed the collection, ACT training, deployment, and iteration loop. Compared action chunk lengths and dataset sizes to establish a manipulation baseline.</span></p>
+        <div class="project-tags"><span>ACT</span><span>Transformer</span><span>LeRobot</span><span>SO-ARM101</span></div>
+        <div class="project-result"><strong>0.257</strong><span><span class="lang-zh">L1 Loss · 由 0.324 降低</span><span class="lang-en">L1 loss · down from 0.324</span></span></div>
+      </div>
+    </div>
+    <details class="project-details"><summary><span class="lang-zh">查看技术方案、实验结果与项目链接</span><span class="lang-en">Explore approach, results & project links</span></summary>
+      <div class="detail-content"><h4 class="original-title">
         <span class="lang-zh">SO-ARM101 机械臂抓取-放置 · ACT 模仿学习</span>
         <span class="lang-en">SO-ARM101 Pick-and-Place · ACT Imitation Learning</span>
-      </h3>
-      <div class="meta">
+      </h4><div class="meta">
         <span class="lang-zh">个人项目 · 独立完成全流程 · LeRobot / ACT / PyTorch / SO-ARM101</span>
         <span class="lang-en">Personal project · end-to-end solo · LeRobot / ACT / PyTorch / SO-ARM101</span>
-      </div>
-      <dl>
+      </div><dl>
         <dt><span class="lang-zh">背景</span><span class="lang-en">Context</span></dt>
         <dd>
           <span class="lang-zh">在 SO-ARM101 六自由度机械臂上,用模仿学习打通"示教采集 → 模型训练 → 真机部署 → 迭代优化"的完整闭环,任务为抓取纸巾团并放置到目标位置。</span>
@@ -438,32 +249,40 @@
           <span class="lang-en">Deployment camera resolution must match the training data (1920×1080), or the policy misjudges depth and the arm stalls ~5 cm above the target; at 1080p the camera must be forced to MJPG, otherwise it falls back to YUYV at just 5 FPS.</span>
         </dd>
       </dl>
-      <!-- 真机演示 GIF + 训练曲线图(本地图片) -->
+      
       <div style="margin-top:16px">
         <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">真机演示 · 抓取纸巾团并放置到目标位置</span><span class="lang-en">Hardware demo · grasping the tissue ball and placing it at the target</span></p>
-        <img src="so101-demo.gif" alt="ACT 真机抓取演示" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line)">
+        <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: ACT 真机抓取演示"><img loading="lazy" decoding="async" src="so101-demo.gif" alt="ACT 真机抓取演示" style="width:100%;border-radius:8px;border:1px solid var(--line)"></button>
       </div>
       <div style="margin-top:10px">
         <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">训练曲线 · L1 / KL Loss</span><span class="lang-en">Training curves · L1 / KL loss</span></p>
-        <img src="so101-loss.png" alt="ACT 训练损失曲线" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+        <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: ACT 训练损失曲线"><img loading="lazy" decoding="async" src="so101-loss.png" alt="ACT 训练损失曲线" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff"></button>
       </div>
       <div class="plinks">
-        <a href="https://github.com/oye-Li-bc/so101-act-grasping" target="_blank"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
-        <a href="https://github.com/oye-Li-bc/so101-act-grasping/blob/main/docs/05-%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95.md" target="_blank"><span class="lang-zh">实验记录</span><span class="lang-en">Experiment log</span></a>
+        <a href="https://github.com/oye-Li-bc/so101-act-grasping" target="_blank" rel="noopener noreferrer"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
+        <a href="https://github.com/oye-Li-bc/so101-act-grasping/blob/main/docs/05-%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95.md" target="_blank" rel="noopener noreferrer"><span class="lang-zh">实验记录</span><span class="lang-en">Experiment log</span></a>
       </div>
     </div>
-
-    <!-- 项目4:储物小车(已完成) -->
-    <div class="proj reveal">
-      <h3>
+    </details>
+  </article>
+<article class="project-card reveal" id="project-4" data-category="design">
+    <div class="project-overview">
+      <div class="project-media portrait"><button class="media-zoom" type="button" style="--media-url:url('gen2-real.jpg')" aria-label="查看大图 / Zoom: PacePal 二代实物"><img src="gen2-real.jpg" alt="PacePal 二代实物" loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">⤢</span></button></div>
+      <div class="project-info"><div class="project-kicker"><span>MECHANICAL DESIGN · PROTOTYPING</span><span class="project-index">04</span></div>
+        <h3><span class="lang-zh">PacePal · 跑步陪伴机器人</span><span class="lang-en">PacePal · A Running Companion</span></h3>
+        <p class="project-summary"><span class="lang-zh">独立负责第 1、2 代样机的整车结构设计，把底盘布局、随行储物和传感器安装整合进一个可实现的机器人结构。</span><span class="lang-en">Sole owner of full structural design for the first two prototypes, integrating the chassis, on-the-go storage, and sensor mounting into a buildable robot.</span></p>
+        <div class="project-tags"><span>SolidWorks</span><span>CAD</span><span>Chassis Design</span></div>
+        <div class="project-result"><strong>02</strong><span><span class="lang-zh">代样机 · 从 CAD 到实物</span><span class="lang-en">prototype generations · CAD to hardware</span></span></div>
+      </div>
+    </div>
+    <details class="project-details"><summary><span class="lang-zh">查看技术方案、实验结果与项目链接</span><span class="lang-en">Explore approach, results & project links</span></summary>
+      <div class="detail-content"><h4 class="original-title">
         <span class="lang-zh">PacePal 跑步陪伴机器人 · 整体结构设计</span>
         <span class="lang-en">PacePal Running Companion Robot · Full Structural Design</span>
-      </h3>
-      <div class="meta">
+      </h4><div class="meta">
         <span class="lang-zh">科垣创新 · 第 1、2 代样机 · 独立负责整车结构设计</span>
         <span class="lang-en">KeYuan Innovation · Gen 1 &amp; 2 prototypes · sole owner of vehicle structural design</span>
-      </div>
-      <dl>
+      </div><dl>
         <dt><span class="lang-zh">背景</span><span class="lang-en">Context</span></dt>
         <dd>
           <span class="lang-zh">科垣创新推出 PacePal 户外跑步陪伴机器人,针对跑者配速不准、储物不便、夜跑安全等痛点,集智能配速领跑、随行储物、主动安全预警三大核心功能于一体,面向 25–35 岁追求科学训练的城市跑者。</span>
@@ -476,52 +295,53 @@
         </dd>
         <dt><span class="lang-zh">技术方案</span><span class="lang-en">Approach</span></dt>
         <dd>
-          <span class="lang-zh">SolidWorks 完成 3D 建模、装配体设计与工程图输出;(填加工装配方式)</span>
-          <span class="lang-en">3D modeling, assembly design, and engineering drawings in SolidWorks; (fill in fabrication/assembly method)</span>
+          <span class="lang-zh">SolidWorks 完成 3D 建模、装配体设计与工程图输出</span>
+          <span class="lang-en">3D modeling, assembly design, and engineering drawings in SolidWorks</span>
         </dd>
-        <!-- <dt><span class="lang-zh">量化结果</span><span class="lang-en">Results</span></dt>
-        <dd class="res">
-          <span class="lang-zh">(载重 / 尺寸 / 实际跑通效果,填真实数据)</span>
-          <span class="lang-en">(payload / dimensions / real test outcome — fill real numbers)</span>
-        </dd> -->
+        
       </dl>
-      <!-- 一代 & 二代样机图片 -->
-      <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      
+      <div class="gallery-grid" style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
         <div>
           <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">一代 · CAD</span><span class="lang-en">Gen 1 · CAD</span></p>
-          <img src="gen1-cad.png" alt="一代 CAD" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid var(--line)">
+          <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: 一代 CAD"><img loading="lazy" decoding="async" src="gen1-cad.png" alt="一代 CAD" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid var(--line)"></button>
         </div>
         <div>
           <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">一代 · 实物</span><span class="lang-en">Gen 1 · Real</span></p>
-          <img src="gen1-real.jpg" alt="一代实物" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid var(--line)">
+          <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: 一代实物"><img loading="lazy" decoding="async" src="gen1-real.jpg" alt="一代实物" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid var(--line)"></button>
         </div>
         <div>
           <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">二代 · CAD</span><span class="lang-en">Gen 2 · CAD</span></p>
-          <img src="gen2-cad.png" alt="二代 CAD" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid var(--line)">
+          <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: 二代 CAD"><img loading="lazy" decoding="async" src="gen2-cad.png" alt="二代 CAD" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid var(--line)"></button>
         </div>
         <div>
           <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">二代 · 实物</span><span class="lang-en">Gen 2 · Real</span></p>
-          <img src="gen2-real.jpg" alt="二代实物" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid var(--line)">
+          <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: 二代实物"><img loading="lazy" decoding="async" src="gen2-real.jpg" alt="二代实物" style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:1px solid var(--line)"></button>
         </div>
       </div>
-      <!-- <div class="plinks">
-        <a href="#" target="_blank"><span class="lang-zh">3D 模型 / 图纸</span><span class="lang-en">3D model / drawings</span></a>
-        <a href="#" target="_blank"><span class="lang-zh">实物视频</span><span class="lang-en">Hardware video</span></a>
-      </div> -->
+      
     </div>
-
-    <!-- 项目5:两轮自平衡机器人(进行中) -->
-    <div class="proj reveal">
-      <h3>
+    </details>
+  </article>
+<article class="project-card reveal" id="project-5" data-category="rl">
+    <div class="project-overview">
+      <div class="project-media contain"><button class="media-zoom" type="button" style="--media-url:url('twowheel-fig3_sim2sim.png')" aria-label="查看大图 / Zoom: 两轮机器人 sim2sim 迁移对比"><img src="twowheel-fig3_sim2sim.png" alt="两轮机器人 sim2sim 迁移对比" loading="lazy" decoding="async"><span class="zoom-hint" aria-hidden="true">⤢</span></button></div>
+      <div class="project-info"><div class="project-kicker"><span>SIMULATION · CONTROL · TRANSFER</span><span class="project-index">05</span></div>
+        <h3><span class="lang-zh">PPO · 两轮机器人的平衡学习</span><span class="lang-en">PPO · Learning to Balance</span><span class="badge"><span class="lang-zh">进行中</span><span class="lang-en">In progress</span></span></h3>
+        <p class="project-summary"><span class="lang-zh">在 Isaac Lab 中训练两轮自平衡策略，再迁移到 MuJoCo。用紧凑策略网络与域随机化，验证跨仿真器部署。</span><span class="lang-en">Trained a two-wheel balancing policy in Isaac Lab and transferred it to MuJoCo, using a compact policy network and domain randomization to validate cross-simulator deployment.</span></p>
+        <div class="project-tags"><span>PPO</span><span>Isaac Lab</span><span>MuJoCo</span><span>Sim2Sim</span></div>
+        <div class="project-result"><strong>10.3 s</strong><span><span class="lang-zh">MuJoCo 平均维持时间 · 原为 4.8 s</span><span class="lang-en">mean MuJoCo survival time · up from 4.8 s</span></span></div>
+      </div>
+    </div>
+    <details class="project-details"><summary><span class="lang-zh">查看技术方案、实验结果与项目链接</span><span class="lang-en">Explore approach, results & project links</span></summary>
+      <div class="detail-content"><h4 class="original-title">
         <span class="lang-zh">两轮自平衡机器人 · PPO 强化学习与 sim2sim 部署</span>
         <span class="lang-en">Two-Wheeled Self-Balancing Robot · PPO RL &amp; Sim-to-Sim Deployment</span>
         <span class="badge"><span class="lang-zh">进行中</span><span class="lang-en">In progress</span></span>
-      </h3>
-      <div class="meta">
+      </h4><div class="meta">
         <span class="lang-zh">科垣创新 · 第 3 代样机 · 负责强化学习全流程 · Isaac Lab / PPO / MuJoCo</span>
         <span class="lang-en">KeYuan Innovation · 3rd-gen prototype · owned the full RL pipeline · Isaac Lab / PPO / MuJoCo</span>
-      </div>
-      <dl>
+      </div><dl>
         <dt><span class="lang-zh">背景</span><span class="lang-en">Context</span></dt>
         <dd>
           <span class="lang-zh">团队第 3 代轮圈式机器人为两轮自平衡构型。相比对精确解析动力学建模的依赖,选择用深度强化学习端到端学习"仅靠两轮力矩保持车身直立"的控制策略,并跨仿真器验证其可迁移性。</span>
@@ -548,43 +368,39 @@
           <span class="lang-en">The first policy found a degenerate solution — upright but continuously drifting forward — fixed by adding a horizontal-velocity penalty so it truly holds position. Training on a floating-base task kept collapsing to NaN, resolved with log-parameterized standard deviation plus online observation normalization. I also traced a wrong base inertia in the deployment model; the transfer numbers above are from after that fix.</span>
         </dd>
       </dl>
-      <!-- 训练曲线 / 稳定性 / sim2sim 对比图(本地图片) -->
-      <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      
+      <div class="gallery-grid" style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
         <div>
           <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">PPO 训练曲线</span><span class="lang-en">PPO training curve</span></p>
-          <img src="twowheel-fig1_train_curve.png" alt="PPO 训练曲线" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+          <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: PPO 训练曲线"><img loading="lazy" decoding="async" src="twowheel-fig1_train_curve.png" alt="PPO 训练曲线" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff"></button>
         </div>
         <div>
           <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">姿态稳定性</span><span class="lang-en">Attitude stability</span></p>
-          <img src="twowheel-fig2_stability.png" alt="姿态稳定性" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+          <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: 姿态稳定性"><img loading="lazy" decoding="async" src="twowheel-fig2_stability.png" alt="姿态稳定性" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff"></button>
         </div>
       </div>
       <div style="margin-top:10px">
         <p style="font-size:13px;color:var(--muted);margin-bottom:6px"><span class="lang-zh">sim2sim 迁移对比(维持时间 / 倾角)</span><span class="lang-en">Sim-to-sim comparison (survival time / tilt)</span></p>
-        <img src="twowheel-fig3_sim2sim.png" alt="sim2sim 迁移对比" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff">
+        <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: sim2sim 迁移对比"><img loading="lazy" decoding="async" src="twowheel-fig3_sim2sim.png" alt="sim2sim 迁移对比" style="width:100%;border-radius:8px;border:1px solid var(--line);background:#fff"></button>
       </div>
       <div class="plinks">
-        <a href="https://github.com/oye-Li-bc/two-wheel-balance-rl" target="_blank"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
-        <a href="https://github.com/oye-Li-bc/two-wheel-balance-rl/blob/main/docs/report.pdf" target="_blank"><span class="lang-zh">技术报告 PDF</span><span class="lang-en">Technical report PDF</span></a>
+        <a href="https://github.com/oye-Li-bc/two-wheel-balance-rl" target="_blank" rel="noopener noreferrer"><span class="lang-zh">代码仓库</span><span class="lang-en">Code</span></a>
+        <a href="https://github.com/oye-Li-bc/two-wheel-balance-rl/blob/main/docs/report.pdf" target="_blank" rel="noopener noreferrer"><span class="lang-zh">技术报告 PDF</span><span class="lang-en">Technical report PDF</span></a>
       </div>
     </div>
+    </details>
+  </article>
+    </div></section>
+    <section class="section experience-section" id="exp" aria-labelledby="exp-title"><div class="wrap">
+      <p class="section-kicker">02 / THE JOURNEY</p><div class="section-heading"><h2 id="exp-title"><span class="lang-zh">在实践中，建立能力。</span><span class="lang-en">Learning by building.</span></h2><p><span class="lang-zh">科创团队、企业实习与真实的工程问题，是我学习机器人最直接的课堂。</span><span class="lang-en">Startup teams, internships, and real engineering problems have shaped how I build robots.</span></p></div>
+      <div class="about-strip"><p><span class="lang-zh">北京科技大学 · 机器人工程（科创班）<br>李泽湘老师体系下的新工科改革试验。</span><span class="lang-en">University of Science and Technology Beijing<br>Robotics Engineering · Innovation Class</span></p><details class="about-detail"><summary><span class="lang-zh">更多关于我</span><span class="lang-en">More about me</span></summary><div class="full-bio">
+      <span class="lang-zh">北京科技大学 · 机器人工程(科创班)大三在读,李泽湘老师体系下新工科改革试验。专注机器人控制与具身智能(仿真 / 强化学习 / 模仿学习 ),在isaaclab 里曾对两款机器人进行过PPO强化学习，并在Mujoco中成功部署策略实现sim2sim。在lerobot框架下使用so-arm101完成了act与smolvla的采集训练部署实现物体抓取移动放置;并在真机上完成 HIL-SERL 人在回路在线强化学习,仅 12 条示教起步、21,000 步约 45 分钟训练,20 次更换起始位置的测试全部成功,失败能自己纠正。</span>
+      <span class="lang-en">Junior in Robotics Engineering (Innovation Class) at University of Science and Technology Beijing — part of the new-engineering reform under Prof. Zexiang Li's program. Focused on robot control and embodied AI (simulation / reinforcement learning / imitation learning). Trained PPO policies for two different robots in Isaac Lab and deployed them to MuJoCo for successful sim-to-sim transfer. On a real SO-ARM101 arm, ran the full data-collection → training → deployment loop with both ACT and SmolVLA to achieve pick-and-place, then took it further with human-in-the-loop online RL (HIL-SERL): starting from just 12 demonstrations, 21,000 steps (~45 min) of on-robot training, and 20/20 success across repositioned trials — with the policy correcting its own failures.</span>
+    </div></details></div>
+      
+    
 
-  </div>
-</section>
-
-<!-- ===== 经历 ===== -->
-<!-- 【第③块 经历】时间线式经历列表。每段经历是一个 <div class="exp">...</div>:
-     .when  时间(如 2025.07 – 2025.08)
-     .what  做了什么 / 职位
-     .where 单位 / 地点(蓝色)
-     .desc  一两句描述(灰色)
-     想加一段新经历:复制一整块 <div class="exp reveal"> ... </div> 改文字。
-     最新的放最上面。中英两份都要改。 -->
-<section id="exp" class="reveal">
-  <div class="wrap">
-    <h2><span class="lang-zh">经历</span><span class="lang-en">Experience</span></h2>
-
-    <!-- 经历1:深圳科创学院冬季科创营 -->
+    
     <div class="exp reveal">
       <div class="when"><span class="lang-zh">2026.01.20 – 2026.02.10 · 大二寒假</span><span class="lang-en">Jan 20 – Feb 10, 2026 · sophomore winter break</span></div>
       <div class="what"><span class="lang-zh">高校代表 · 冬季科创营学员</span><span class="lang-en">University Representative · Winter Innovation Camp Trainee</span></div>
@@ -593,11 +409,11 @@
         <span class="lang-zh">作为高校代表参加深圳科创学院冬季科创营,获得"初级产品经理"结业证书。</span>
         <span class="lang-en">Attended the Shenzhen InnoX Academy Winter Innovation Camp as a university representative; awarded the "Junior Product Manager" certificate.</span>
         <br>
-        <img src="cert-innox-winter.jpg" alt="初级产品经理结业证书" style="margin-top:12px;max-width:360px;width:100%;border-radius:8px;border:1px solid var(--line)">
+        <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: 初级产品经理结业证书"><img loading="lazy" decoding="async" src="cert-innox-winter.jpg" alt="初级产品经理结业证书" style="margin-top:12px;max-width:360px;width:100%;border-radius:8px;border:1px solid var(--line)"></button>
       </div>
     </div>
 
-    <!-- 经历2:科垣创新 初创团队 -->
+    
     <div class="exp reveal">
       <div class="when"><span class="lang-zh">2025.09 – 至今 · 大二</span><span class="lang-en">Sep 2025 – present · sophomore year</span></div>
       <div class="what"><span class="lang-zh">核心成员 · 结构 / 运动控制</span><span class="lang-en">Core member · Structure / Motion Control</span></div>
@@ -613,7 +429,7 @@
       </div>
     </div>
 
-    <!-- 经历3:速竞创新 结构工程师实习 -->
+    
     <div class="exp reveal">
       <div class="when"><span class="lang-zh">2025.07 · 大一暑假 · 为期一个月</span><span class="lang-en">Jul 2025 · freshman summer · one month</span></div>
       <div class="what"><span class="lang-zh">结构实习生</span><span class="lang-en">Structure Intern</span></div>
@@ -626,26 +442,19 @@
           <li><span class="lang-zh">试营业期间跟随 leader 参与赛车故障排查(累计约 20 车次),主要负责分析问题成因、提出思路并打下手,从中入门机械维修与调试。</span><span class="lang-en">During the trial-operation period, assisted the team lead in troubleshooting the rigs (~20 sessions), focusing on analyzing root causes and offering ideas while learning hands-on repair and debugging.</span></li>
           <li><span class="lang-zh">实操了激光切割、喷漆等加工工艺,并参与新车型布局与结构强度优化的讨论。</span><span class="lang-en">Got hands-on with laser cutting and spray painting, and joined discussions on new-model layout and structural-strength optimization.</span></li>
         </ul>
-        <img src="photo-sujing.jpg" alt="速竞创新实习留影" style="margin-top:12px;max-width:360px;width:100%;border-radius:8px;border:1px solid var(--line)">
+        <button type="button" class="media-zoom" aria-label="查看大图 / Zoom: 速竞创新实习留影"><img loading="lazy" decoding="async" src="photo-sujing.jpg" alt="速竞创新实习留影" style="margin-top:12px;max-width:360px;width:100%;border-radius:8px;border:1px solid var(--line)"></button>
       </div>
     </div>
 
-  </div>
-</section>
-
-<!-- ===== 技术栈 ===== -->
-<!-- 【技术栈】放在作品集之后。按分类列出,每一类是一个 .stack-group。
-     - 改某类下的技能:改 .tag 里的文字。
-     - 加一个技能:复制一行 <span class="tag">XXX</span>。
-     - 让技能变绿(主攻):class="tag" → class="tag core"。
-     - 加/删一整个分类:复制或删掉一整块 <div class="stack-group">...</div>。
-     - 改分类名:改 <h4> 里的中文。 -->
-<section id="stack">
-  <div class="wrap">
-    <h2><span class="lang-zh">技术栈</span><span class="lang-en">Tech Stack</span></h2>
+  
+    </div></section>
+    <section class="section stack-section" id="stack" aria-labelledby="stack-title"><div class="wrap">
+      <p class="section-kicker">03 / MY TOOLKIT</p><div class="section-heading"><h2 id="stack-title"><span class="lang-zh">让实践落地的工具。</span><span class="lang-en">Tools behind the work.</span></h2><p><span class="lang-zh">以具身智能为主线，连接仿真训练、软件开发与机械设计。</span><span class="lang-en">Embodied AI at the core, supported by simulation, software, and mechanical design.</span></p></div>
+      <div class="stack-layout">
+    
 
     <div class="stack-group reveal">
-      <h4><span class="lang-zh">主攻 · 具身智能</span><span class="lang-en">Focus · Embodied AI</span></h4>
+      <h3><span class="lang-zh">主攻 · 具身智能</span><span class="lang-en">Focus · Embodied AI</span></h3>
       <div class="skills">
         <span class="tag core"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5l1.8 3.9 4.2.5-3.1 2.9.9 4.2L8 10.9 4.3 13l.9-4.2L2 5.9l4.2-.5z"/></svg><span class="lang-zh">强化学习 (RL)</span><span class="lang-en">Reinforcement Learning</span></span>
         <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12.5V9m3 3.5V6m3 6.5V3.5m3 9V7.5"/><path d="M1.5 14.5h13"/></svg><span class="lang-zh">模仿学习 (ACT)</span><span class="lang-en">Imitation Learning (ACT)</span></span>
@@ -656,7 +465,7 @@
     </div>
 
     <div class="stack-group reveal">
-      <h4><span class="lang-zh">仿真与训练</span><span class="lang-en">Simulation &amp; Training</span></h4>
+      <h3><span class="lang-zh">仿真与训练</span><span class="lang-en">Simulation &amp; Training</span></h3>
       <div class="skills">
         <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.5L14 5v6L8 14.5 2 11V5z"/><path d="M2 5l6 3.5L14 5M8 8.5v6"/></svg>Isaac Lab</span>
         <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/><ellipse cx="8" cy="8" rx="6.5" ry="2.6"/><ellipse cx="8" cy="8" rx="6.5" ry="2.6" transform="rotate(60 8 8)"/><ellipse cx="8" cy="8" rx="6.5" ry="2.6" transform="rotate(120 8 8)"/></svg>MuJoCo</span>
@@ -666,7 +475,7 @@
     </div>
 
     <div class="stack-group reveal">
-      <h4><span class="lang-zh">编程语言</span><span class="lang-en">Programming</span></h4>
+      <h3><span class="lang-zh">编程语言</span><span class="lang-en">Programming</span></h3>
       <div class="skills">
         <span class="tag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><path d="M4 6l2 2-2 2M8 10h4"/></svg>C</span>
         <span class="tag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true"><path d="M11 4.5C11 2.5 9.5 2 8 2S5 2.5 5 4.5 6.5 7 8 7s3 .5 3 2.5S9.5 14 8 14s-3-.5-3-2.5"/><circle cx="6.4" cy="4.2" r="0.6" fill="currentColor" stroke="none"/><circle cx="9.6" cy="11.8" r="0.6" fill="currentColor" stroke="none"/></svg>Python</span>
@@ -675,7 +484,7 @@
     </div>
 
     <div class="stack-group reveal">
-      <h4><span class="lang-zh">机器人开发</span><span class="lang-en">Robotics Dev</span></h4>
+      <h3><span class="lang-zh">机器人开发</span><span class="lang-en">Robotics Dev</span></h3>
       <div class="skills">
         <span class="tag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="3.5" cy="3.5" r="2"/><circle cx="12.5" cy="3.5" r="2"/><circle cx="8" cy="12.5" r="2"/><path d="M5 4.5l6 0M4.3 5.2l3 5.6M11.7 5.2l-3 5.6"/></svg>ROS</span>
         <span class="tag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="7" height="7" rx="1"/><path d="M6.5 1.5v3M9.5 1.5v3M6.5 11.5v3M9.5 11.5v3M1.5 6.5h3M1.5 9.5h3M11.5 6.5h3M11.5 9.5h3"/></svg><span class="lang-zh">嵌入式 / STM32</span><span class="lang-en">Embedded / STM32</span></span>
@@ -683,57 +492,108 @@
     </div>
 
     <div class="stack-group reveal">
-      <h4><span class="lang-zh">机械设计</span><span class="lang-en">Mechanical Design</span></h4>
+      <h3><span class="lang-zh">机械设计</span><span class="lang-en">Mechanical Design</span></h3>
       <div class="skills">
         <span class="tag core"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="2"/><path d="M8 1.2v2.3M8 12.5v2.3M14.8 8h-2.3M3.5 8H1.2M12.8 3.2l-1.6 1.6M4.8 11.2l-1.6 1.6M12.8 12.8l-1.6-1.6M4.8 4.8L3.2 3.2"/></svg>SolidWorks</span>
       </div>
     </div>
 
-    <p style="color:var(--muted);margin-top:18px;font-size:14px">
+    </div><p class="stack-note" style="color:var(--muted);margin-top:18px;font-size:14px">
       <span class="lang-zh">绿色为主攻方向相关 · 其余为支撑能力</span>
       <span class="lang-en">Green = core focus · others = supporting skills</span>
     </p>
-  </div>
-</section>
-
-<!-- 【第⑤块 页脚】最底部一行小字。改 <div> 里的文字即可。 -->
-<footer>
-  <div class="wrap">
-    <span class="lang-zh">© 2026 〇也 · 用 HTML 手写 · 持续更新中</span>
-    <span class="lang-en">© 2026 Li Bocheng · Hand-written in HTML · Continuously updated</span>
-  </div>
-</footer>
-
-<!-- 【中英切换脚本】点按钮时给 <body> 加/去掉 show-en 这个标记,
-     CSS 就会据此显示中文或英文。这段一般不用改。 -->
-<script>
-  function toggleLang(){
-    document.body.classList.toggle('show-en');
+  
+    </div></section>
+    <section class="contact-section" id="contact" aria-labelledby="contact-title"><div class="wrap contact-layout">
+      <div><p class="section-kicker">04 / LET’S CONNECT</p><h2 id="contact-title"><span class="lang-zh">从一次交流开始。</span><span class="lang-en">Let’s start a conversation.</span></h2><p><span class="lang-zh">欢迎交流机器人控制、具身智能，以及有趣的项目。</span><span class="lang-en">Open to conversations about robot control, embodied AI, and interesting projects.</span></p></div>
+      <div class="contact-actions"><a class="contact-email" href="mailto:libocheng1632@outlook.com">libocheng1632@outlook.com ↗</a><button type="button" class="contact-copy" aria-live="polite"><span class="lang-zh">复制邮箱地址 ↗</span><span class="lang-en">Copy email address ↗</span></button><div class="contact-links"><a href="https://github.com/oye-Li-bc" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener noreferrer"><span class="lang-zh">简历 PDF ↗</span><span class="lang-en">Résumé PDF ↗</span></a></div></div>
+    </div></section>
+  </main>
+  <footer><div class="wrap footer-inner"><span>© 2026 <span class="lang-zh">〇也</span><span class="lang-en">LingYe · Li Bocheng</span></span><span>BUILT WITH CURIOSITY. <span class="lang-zh">持续探索，持续更新。</span><span class="lang-en">ALWAYS EXPLORING.</span></span></div></footer>
+  <a class="back-top" href="#top" aria-label="回到顶部 / Back to top" hidden>↑</a>
+  <dialog class="lightbox" aria-labelledby="lightbox-caption"><div class="lightbox-header"><span class="lightbox-caption" id="lightbox-caption"></span><button type="button" class="lightbox-close" aria-label="关闭大图 / Close image" autofocus>×</button></div><img class="lightbox-image" alt=""></dialog>
+  <script>(() => {
+  const body = document.body;
+  const isEnglish = () => body.classList.contains('show-en');
+  const storage = { get(key) { try { return localStorage.getItem(key); } catch { return null; } }, set(key, value) { try { localStorage.setItem(key, value); } catch {} } };
+  function setLanguage(english) {
+    body.classList.toggle('show-en', english);
+    document.documentElement.lang = english ? 'en' : 'zh-CN';
+    document.title = english ? 'LingYe · Robotics & Embodied AI' : '〇也 · 机器人工程与具身智能';
+    document.querySelector('.lang-toggle').setAttribute('aria-label', english ? '切换到中文' : 'Switch to English');
+    storage.set('portfolio-language', english ? 'en' : 'zh');
+    updateCount();
   }
-
-  /* 【滚动渐入脚本】监视所有 class 带 reveal 的元素,
-     当它们滚动进入屏幕时,加上 show 让它淡入上浮。一般不用改。 */
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        e.target.classList.add('show');
-        io.unobserve(e.target);   // 只触发一次,出现后不再监视
-      }
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-
-  /* 【每次打开都从顶部开始】关掉浏览器"记住滚动位置";若网址带 #projects
-     这类锚点(点过顶部按钮后会留下),清掉它并滚回最顶部的名字那一屏。
-     注意:这不影响浏览时点"作品集"按钮跳转。 */
-  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
-  window.addEventListener('load', function(){
-    if (location.hash) {
-      history.replaceState(null, '', location.pathname);  // 抹掉网址里的 #xxx
-    }
-    window.scrollTo(0, 0);
+  document.querySelector('.lang-toggle').addEventListener('click', () => setLanguage(!isEnglish()));
+  const cards = [...document.querySelectorAll('.project-card')];
+  const filters = [...document.querySelectorAll('.filter')];
+  function updateCount() {
+    const count = cards.filter(card => !card.hidden).length;
+    document.querySelector('.project-count').textContent = String(count).padStart(2, '0') + (isEnglish() ? ' PROJECTS' : ' 个项目');
+  }
+  filters.forEach(button => button.addEventListener('click', () => {
+    filters.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+    cards.forEach(card => { card.hidden = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter; });
+    updateCount();
+  }));
+  if (storage.get('portfolio-language') === 'en') setLanguage(true); else updateCount();
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('show'); revealObserver.unobserve(entry.target); }
+    }), { threshold: 0.06 });
+    reveals.forEach(element => revealObserver.observe(element));
+    const links = [...document.querySelectorAll('.nav-links a')];
+    const navObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) links.forEach(link => {
+        const active = link.getAttribute('href') === '#' + entry.target.id;
+        link.classList.toggle('active', active);
+        if (active) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current');
+      });
+    }), { rootMargin: '-15% 0px -65% 0px', threshold: 0 });
+    document.querySelectorAll('main > section[id]').forEach(section => navObserver.observe(section));
+  } else reveals.forEach(element => element.classList.add('show'));
+  const dialog = document.querySelector('.lightbox');
+  const dialogImage = dialog.querySelector('img');
+  const dialogCaption = dialog.querySelector('.lightbox-caption');
+  let lastZoom = null;
+  document.querySelectorAll('.media-zoom').forEach(button => button.addEventListener('click', () => {
+    const image = button.querySelector('img');
+    if (typeof dialog.showModal !== 'function') { window.open(image.src, '_blank', 'noopener'); return; }
+    lastZoom = button;
+    dialogImage.src = image.src;
+    dialogImage.alt = image.alt;
+    dialogCaption.textContent = image.alt;
+    dialog.showModal();
+    body.style.overflow = 'hidden';
+  }));
+  dialog.querySelector('.lightbox-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', event => { if (event.target === dialog) { const bounds = dialog.getBoundingClientRect(); if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close(); } });
+  dialog.addEventListener('close', () => { body.style.overflow = ''; dialogImage.removeAttribute('src'); if (lastZoom) lastZoom.focus({ preventScroll: true }); });
+  const copyButton = document.querySelector('.contact-copy');
+  let copyReset;
+  copyButton.addEventListener('click', async () => {
+    const zh = copyButton.querySelector('.lang-zh');
+    const en = copyButton.querySelector('.lang-en');
+    try {
+      if (!navigator.clipboard) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText('libocheng1632@outlook.com');
+      zh.textContent = '已复制邮箱 ✓'; en.textContent = 'Email copied ✓';
+    } catch { zh.textContent = '请点击上方邮箱发送邮件'; en.textContent = 'Use the email link above'; }
+    clearTimeout(copyReset);
+    copyReset = setTimeout(() => { zh.textContent = '复制邮箱地址 ↗'; en.textContent = 'Copy email address ↗'; }, 3500);
   });
+  const backTop = document.querySelector('.back-top');
+  const updateBackTop = () => {
+    backTop.hidden = window.scrollY < 600;
+    if (window.scrollY < document.querySelector('#projects').offsetTop - 200) {
+      document.querySelectorAll('.nav-links a').forEach(link => { link.classList.remove('active'); link.removeAttribute('aria-current'); });
+    }
+  };
+  window.addEventListener('scroll', updateBackTop, { passive: true });
+  updateBackTop();
+  body.classList.add('enhanced');
+})();
 </script>
-
 </body>
 </html>
