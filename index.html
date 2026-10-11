@@ -20,6 +20,26 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}.enhanced .reveal{opacity:1;transform:none}.media-zoom:hover img{transform:none}}
 @media(max-width:400px){.hero h1{font-size:clamp(34px,11vw,43px)}}
 
+/* Motion keeps native details/dialog behavior and follows the system motion preference. */
+html{scrollbar-gutter:stable}
+.smooth-details{overflow-anchor:none}
+.smooth-details.is-animating{overflow:clip;will-change:height}
+.smooth-details>summary::after{display:none}
+.disclosure-icon{position:relative;width:15px;height:15px;flex:none;margin-left:15px;color:var(--accent)}
+.disclosure-icon::before,.disclosure-icon::after{content:"";position:absolute;inset:7px 1px auto;height:1.5px;background:currentColor;border-radius:2px;transition:transform .38s cubic-bezier(.22,1,.36,1),opacity .25s ease}
+.disclosure-icon::after{transform:rotate(90deg)}
+.smooth-details[data-expanded=true] .disclosure-icon::after{transform:rotate(0);opacity:0}
+.smooth-details>summary{transition:color .25s ease,background .25s ease}
+.button,.filter,.lang-toggle,.lightbox-close{transition:transform .25s cubic-bezier(.22,1,.36,1),background .25s ease,border-color .25s ease,color .25s ease}
+.button:active,.filter:active,.lang-toggle:active,.lightbox-close:active{transform:scale(.97)}
+.media-zoom{transition:filter .3s ease}
+.media-zoom:active{filter:brightness(.92)}
+.lightbox[open]::backdrop{animation:backdrop-in .38s cubic-bezier(.22,1,.36,1) both}
+.lightbox.is-closing::backdrop{animation:backdrop-out .22s ease-in both}
+@keyframes backdrop-in{from{opacity:0}to{opacity:1}}
+@keyframes backdrop-out{from{opacity:1}to{opacity:0}}
+@media(prefers-reduced-motion:reduce){.smooth-details.is-animating{will-change:auto}.button:active,.filter:active,.lang-toggle:active,.lightbox-close:active{transform:none}.lightbox[open]::backdrop{animation:none}}
+
 </style>
 </head>
 <body id="top">
@@ -512,8 +532,89 @@
   <footer><div class="wrap footer-inner"><span>© 2026 <span class="lang-zh">〇也</span><span class="lang-en">oye · Li Bocheng</span></span><span>BUILT WITH CURIOSITY. <span class="lang-zh">持续探索，持续更新。</span><span class="lang-en">ALWAYS EXPLORING.</span></span></div></footer>
   <a class="back-top" href="#top" aria-label="回到顶部 / Back to top" hidden>↑</a>
   <dialog class="lightbox" aria-labelledby="lightbox-caption"><div class="lightbox-header"><span class="lightbox-caption" id="lightbox-caption"></span><button type="button" class="lightbox-close" aria-label="关闭大图 / Close image" autofocus>×</button></div><img class="lightbox-image" alt=""></dialog>
-  <script>(() => {
+  <script>
+(() => {
   const body = document.body;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const motionEase = 'cubic-bezier(.22, 1, .36, 1)';
+  const disclosures = [];
+  document.querySelectorAll('.project-details, .about-detail').forEach((details, index) => {
+    const summary = details.querySelector('summary');
+    const content = summary.nextElementSibling;
+    if (!content || typeof details.animate !== 'function') return;
+    const icon = document.createElement('span');
+    icon.className = 'disclosure-icon';
+    icon.setAttribute('aria-hidden', 'true');
+    summary.append(icon);
+    content.id ||= 'disclosure-content-' + index;
+    summary.setAttribute('aria-controls', content.id);
+    details.classList.add('smooth-details');
+    let expanded = details.open;
+    let heightAnimation = null;
+    let contentAnimation = null;
+    let targetHeight = 0;
+    const setState = () => {
+      details.dataset.expanded = String(expanded);
+      summary.setAttribute('aria-expanded', String(expanded));
+    };
+    const closedHeight = () => {
+      const style = getComputedStyle(details);
+      return summary.getBoundingClientRect().height + parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+    };
+    const openHeight = () => {
+      const style = getComputedStyle(content);
+      return closedHeight() + content.getBoundingClientRect().height + (parseFloat(style.marginTop) || 0) + (parseFloat(style.marginBottom) || 0);
+    };
+    function finish() {
+      if (heightAnimation) { heightAnimation.onfinish = null; heightAnimation.cancel(); heightAnimation = null; }
+      if (contentAnimation) { contentAnimation.cancel(); contentAnimation = null; }
+      details.open = expanded;
+      details.style.height = '';
+      details.classList.remove('is-animating');
+      content.inert = !expanded;
+    }
+    function animateHeight(height) {
+      const from = details.getBoundingClientRect().height;
+      details.style.height = from + 'px';
+      if (heightAnimation) { heightAnimation.onfinish = null; heightAnimation.cancel(); }
+      targetHeight = height;
+      const duration = Math.min(620, 330 + Math.sqrt(Math.abs(height - from)) * 4);
+      heightAnimation = details.animate([{ height: from + 'px' }, { height: height + 'px' }], { duration, easing: motionEase, fill: 'both' });
+      heightAnimation.onfinish = finish;
+    }
+    function toggle() {
+      const wasClosed = !details.open;
+      expanded = !expanded;
+      setState();
+      if (reducedMotion.matches) { finish(); return; }
+      const currentHeight = details.getBoundingClientRect().height;
+      const contentStyle = getComputedStyle(content);
+      const fromOpacity = wasClosed ? 0 : Number(contentStyle.opacity);
+      const fromTransform = wasClosed ? 'translateY(10px)' : contentStyle.transform;
+      details.style.height = currentHeight + 'px';
+      if (heightAnimation) { heightAnimation.onfinish = null; heightAnimation.cancel(); heightAnimation = null; }
+      if (contentAnimation) contentAnimation.cancel();
+      details.open = true;
+      content.inert = !expanded;
+      details.classList.add('is-animating');
+      contentAnimation = content.animate([
+        { opacity: fromOpacity, transform: fromTransform },
+        { opacity: expanded ? 1 : 0, transform: expanded ? 'translateY(0)' : 'translateY(6px)' }
+      ], { duration: expanded ? 360 : 180, easing: motionEase, fill: 'both' });
+      animateHeight(expanded ? openHeight() : closedHeight());
+    }
+    summary.addEventListener('click', event => { event.preventDefault(); toggle(); });
+    // Lazy images, language changes, and viewport changes can alter the target mid-flight.
+    if ('ResizeObserver' in window) new ResizeObserver(() => {
+      if (!heightAnimation) return;
+      const nextHeight = expanded ? openHeight() : closedHeight();
+      if (Math.abs(nextHeight - targetHeight) > 2) animateHeight(nextHeight);
+    }).observe(content);
+    setState();
+    content.inert = !expanded;
+    disclosures.push(finish);
+  });
+  reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) disclosures.forEach(finish => finish()); });
   const isEnglish = () => body.classList.contains('show-en');
   const storage = { get(key) { try { return localStorage.getItem(key); } catch { return null; } }, set(key, value) { try { localStorage.setItem(key, value); } catch {} } };
   function setLanguage(english) {
@@ -557,19 +658,47 @@
   const dialogImage = dialog.querySelector('img');
   const dialogCaption = dialog.querySelector('.lightbox-caption');
   let lastZoom = null;
+  let modalAnimation = null;
+  let modalClosing = false;
+  function closeLightbox() {
+    if (!dialog.open || modalClosing) return;
+    if (reducedMotion.matches || typeof dialog.animate !== 'function') { dialog.close(); return; }
+    modalClosing = true;
+    dialog.classList.add('is-closing');
+    const style = getComputedStyle(dialog);
+    const from = { opacity: style.opacity, transform: style.transform };
+    if (modalAnimation) modalAnimation.cancel();
+    modalAnimation = dialog.animate([from, { opacity: 0, transform: 'translateY(10px) scale(.97)' }], { duration: 220, easing: 'cubic-bezier(.4, 0, 1, 1)', fill: 'both' });
+    modalAnimation.onfinish = () => dialog.close();
+  }
   document.querySelectorAll('.media-zoom').forEach(button => button.addEventListener('click', () => {
     const image = button.querySelector('img');
     if (typeof dialog.showModal !== 'function') { window.open(image.src, '_blank', 'noopener'); return; }
     lastZoom = button;
     dialogImage.src = image.src;
     dialogImage.alt = image.alt;
+    if (image.naturalWidth && image.naturalHeight) { dialogImage.width = image.naturalWidth; dialogImage.height = image.naturalHeight; }
     dialogCaption.textContent = image.alt;
     dialog.showModal();
     body.style.overflow = 'hidden';
+    if (!reducedMotion.matches && typeof dialog.animate === 'function') {
+      modalAnimation = dialog.animate([
+        { opacity: 0, transform: 'translateY(18px) scale(.94)' },
+        { opacity: 1, transform: 'translateY(0) scale(1)' }
+      ], { duration: 380, easing: motionEase });
+    }
   }));
-  dialog.querySelector('.lightbox-close').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('click', event => { if (event.target === dialog) { const bounds = dialog.getBoundingClientRect(); if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close(); } });
-  dialog.addEventListener('close', () => { body.style.overflow = ''; dialogImage.removeAttribute('src'); if (lastZoom) lastZoom.focus({ preventScroll: true }); });
+  dialog.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+  dialog.addEventListener('cancel', event => { event.preventDefault(); closeLightbox(); });
+  dialog.addEventListener('click', event => { if (event.target === dialog) { const bounds = dialog.getBoundingClientRect(); if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closeLightbox(); } });
+  dialog.addEventListener('close', () => {
+    if (modalAnimation) { modalAnimation.onfinish = null; modalAnimation.cancel(); modalAnimation = null; }
+    modalClosing = false;
+    dialog.classList.remove('is-closing');
+    body.style.overflow = '';
+    dialogImage.removeAttribute('src');
+    if (lastZoom) lastZoom.focus({ preventScroll: true });
+  });
   const copyButton = document.querySelector('.contact-copy');
   let copyReset;
   copyButton.addEventListener('click', async () => {
@@ -594,6 +723,7 @@
   updateBackTop();
   body.classList.add('enhanced');
 })();
+
 </script>
 </body>
 </html>
