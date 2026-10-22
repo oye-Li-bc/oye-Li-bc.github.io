@@ -1,6 +1,6 @@
 # oye · Robotics Portfolio
 
-![oye · Robotics Portfolio 项目封面](.github/readme/cover.svg)
+![oye · Robotics Portfolio 项目封面](.github/readme/cover-imagegen.webp)
 
 ![PORTFOLIO](https://img.shields.io/badge/PORTFOLIO-project-516d64)
 [![Portfolio](https://img.shields.io/badge/oye-portfolio-516d64)](https://oye-li-bc.github.io/)
@@ -53,4 +53,4 @@ python -m http.server 8000 --bind 127.0.0.1
 
 更新时保留资料来源、实验条件与图片说明；用桌面和手机宽度检查排版，再检查切换语言、筛选、展开详情和图片放大。
 
-封面是原创示意插图，实际网站效果请打开在线主页查看；[图片说明](.github/readme/README.md)。
+封面为 imagegen 生成的概念插画，实际网站效果请打开在线主页查看；[图片说明](.github/readme/README.md)。
